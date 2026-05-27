@@ -63,6 +63,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            width: 100%; 
         }
 
         .brand img {
@@ -330,41 +331,50 @@
         }
 
         @media (max-width: 600px) {
-            /* மொபைல் ஸ்கிரீன் ஓரத்துக்கான பக்கா கேப் */
+            /* 👑 மொபைல் ஸ்கிரீன் விளிம்பில் ஒட்டாமல் இருக்க பக்காவான கேப் (Edge Gap) */
             .container {
-                padding: 0 14px; 
+                padding: 0 16px; /* இடது-வலது ஓரங்களில் 16px அழகான கேப் இருக்கும் */
             }
             header {
                 padding: 15px 0;
             }
+            
+            /* மொபைல் ஹெடர் லோகோ & டெக்ஸ்ட் அலைன்மென்ட் */
+            .brand {
+                justify-content: space-between; 
+                gap: 0;
+            }
             .brand h1 {
-                font-size: 20px;
+                font-size: 19px; 
+                text-align: right; 
             }
             .brand img {
                 width: 42px;
                 height: 42px;
             }
             
-            /* 👑 [மாற்றப்பட்டுள்ளது] டாப் ஹெடிங் நடுவுல ஒடுங்காமல் லெஃப்ட் அலைன் செய்யப்பட்டு எட்ஜ் வரை விரிவடைகிறது! */
+            /* 👑 [மாற்றப்பட்டுள்ளது] எல்லாமே சென்டர், ஆனா ஸ்கிரீன் எட்ஜ் வரை அகலமாப் பரவி நிற்கும்! */
             .hero-text {
-                align-items: flex-start; /* கன்டென்ட் முழுவதையும் இடது பக்கமாக அலைன் செய்கிறது மச்சி */
-                text-align: left; /* சென்டராக இருந்த டெக்ஸ்ட்டை லெஃப்ட் அலைன் ஆக்கியாச்சு */
+                align-items: center; /* கன்டென்ட்டை சென்டராக வைக்கிறது */
+                text-align: center; /* எழுத்துக்களை சென்டர் அலைன் செய்கிறது மச்சி */
+                width: 100%;
             }
             
             .hero-text h2 {
                 font-size: 30px; 
                 line-height: 1.4;
                 margin-bottom: 22px;
-                width: 100%; 
+                width: 100%; /* டெக்ஸ்ட் நடுவுல ஒடுங்காம முழு அகலத்தையும் பயன்படுத்தும் */
             }
-            /* மொபைல் மெயின் டிஸ்கிரிப்ஷன் பேரகிராஃப் */
+            
             .hero-text p {
                 font-size: 17px; 
                 line-height: 1.6;
                 margin-bottom: 35px;
                 color: #e2e8f0; 
-                width: 100%;
+                width: 100%; /* பேரகிராஃபும் நல்லா எட்ஜ் வரைக்கும் அகலமா விரியும் */
             }
+            
             /* மொபைல் பட்டன் */
             .btn {
                 width: 100%;
@@ -374,7 +384,7 @@
             .cta-buttons {
                 gap: 14px;
                 padding: 0; 
-                justify-content: flex-start; /* பட்டன்களும் இடது பக்க அலைன்மென்ட்டுக்கு மாறுகிறது */
+                justify-content: center; /* பட்டன்களும் கச்சிதமாக சென்டர் அலைன் */
             }
             .phone-mockup {
                 width: 250px;
@@ -382,9 +392,9 @@
                 margin-top: 35px;
             }
             
-            /* ஏன் ஆப் சிறந்தது பகுதி அலைன்மென்ட் */
+            /* ஏன் ஆப் சிறந்தது பகுதி சென்டர் அலைன்மென்ட் */
             .section-title {
-                text-align: left; /* இதையும் லெஃப்ட் அலைன் பண்ணிட்டா பார்க்க செம கிளாஸா இருக்கும் */
+                text-align: center; 
             }
             .section-title h3 {
                 font-size: 26px;
@@ -394,6 +404,7 @@
             }
             .feature-card {
                 padding: 24px; 
+                text-align: center; /* கார்டுகளுக்குள் இருக்கும் விபரங்களும் சென்டர் */
             }
             .feature-card h4 {
                 font-size: 21px; 
