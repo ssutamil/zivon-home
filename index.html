@@ -30,7 +30,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden; /* மொபைலில் பக்கவாட்டில் நகர்வதை முற்றிலும் தடுக்கும் வித்தை */
+            overflow-x: hidden;
             width: 100%;
         }
 
@@ -81,7 +81,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 👑 ஹீரோ செக்ஷன் - சும்மா அதிரடியா இருக்கணும் */
+        /* 👑 ஹீரோ செக்ஷன் */
         .hero {
             padding: 80px 0 60px 0;
             display: flex;
@@ -95,13 +95,14 @@
             flex: 1;
             max-width: 600px;
             width: 100%;
-            word-wrap: break-word; /* பெரிய வார்த்தைகள் இருந்தால் உடைந்து உள்ளே வர உதவும் */
+            word-wrap: break-word;
         }
 
+        /* 💻 கம்ப்யூட்டருக்கான அசல் பெரிய சைஸ் டைட்டில் */
         .hero-text h2 {
-            font-size: 42px; /* நீங்க கேட்ட அதே பழைய கம்பீரமான எழுத்து அளவு */
-            line-height: 1.3;
-            margin-bottom: 20px;
+            font-size: 42px;
+            line-height: 1.4;
+            margin-bottom: 24px;
             font-weight: 700;
         }
 
@@ -110,17 +111,17 @@
         }
 
         .hero-text p {
-            font-size: 16px; /* பழைய அதே அளவு */
+            font-size: 16px;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 35px;
         }
 
-        /* 👑 அல்ตรา மாடர்ன் டவுன்லோட் பட்டன்கள் மச்சி! */
+        /* 👑 டவுன்லோட் பட்டன்கள் */
         .cta-buttons {
             display: flex;
             gap: 16px;
-            flex-wrap: wrap; /* இடம் பத்தவில்லை என்றால் பட்டன் தானாக கீழே இறங்கிவிடும், ஸ்கிரீனை விட்டு வெளில போகாது */
+            flex-wrap: wrap;
             width: 100%;
         }
 
@@ -129,13 +130,13 @@
             align-items: center;
             justify-content: center;
             padding: 14px 28px;
-            font-size: 15px; /* பழைய பட்டன் டெக்ஸ்ட் சைஸ் */
+            font-size: 15px;
             font-weight: 600;
             border-radius: 30px;
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
-            white-space: nowrap; /* பட்டன் உள்ளே இருக்கும் டெக்ஸ்ட் உடையாமல் இருக்க */
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -167,14 +168,14 @@
             align-items: center;
             position: relative;
             width: 100%;
-            max-width: 100%; /* போன் இமேஜ் ஸ்கிரீனை தாண்டாமல் தடுக்க */
+            max-width: 100%;
         }
 
-        /* 👑 போன் பிரேம் மாதிரியான அனிமேஷன் டிசைன் வித்தை */
+        /* 👑 போன் பிரேம் மாக்கப் */
         .phone-mockup {
-            width: 280px; /* பழைய அதே அசல் அளவு */
+            width: 280px;
             height: 560px;
-            max-width: 100%; /* மிகச் சிறிய போன்களில் இது ஸ்கிரீன் அளவுக்கு சுருங்கும், வெளில போகாது */
+            max-width: 100%;
             border: 10px solid #222b35;
             border-radius: 36px;
             background-color: #000;
@@ -235,7 +236,7 @@
             100% { transform: translateY(0px); }
         }
 
-        /* 👑 ஏன் வெப்சைட்டை விட ஆப் பெஸ்ட்? பக்கா தமிழ் எக்ஸ்பிளனேஷன் பகுதி */
+        /* 👑 ஏன் வெப்சைட்டை விட ஆப் பெஸ்ட் பகுதி */
         .features-section {
             padding: 80px 0;
             background-color: var(--card-bg);
@@ -249,7 +250,7 @@
         }
 
         .section-title h3 {
-            font-size: 32px; /* பழைய அளவு */
+            font-size: 32px;
             font-weight: 700;
             margin-bottom: 15px;
         }
@@ -261,7 +262,6 @@
 
         .features-grid {
             display: grid;
-            /* கிரிட் பாக்ஸ்கள் தானாக மொபைலுக்கு தகுந்தவாறு அட்ஜஸ்ட் ஆகும், வெளியே போகாது */
             grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); 
             gap: 30px;
             width: 100%;
@@ -269,7 +269,7 @@
 
         .feature-card {
             background-color: var(--bg-color);
-            padding: 35px; /* பழைய பக்கா ஸ்பேசிங் */
+            padding: 35px;
             border-radius: 20px;
             border: 1px solid #222b35;
             transition: all 0.3s ease;
@@ -310,12 +310,13 @@
             width: 100%;
         }
 
-        /* 👑 மொபைல், டேப்லெட் அட்ஜஸ்ட்மென்ட் (சைஸ் மாறாது, அலைன்மென்ட் மட்டும் மாறும்) */
+        /* 📱 👑 மொபைலுக்கான பக்கா மேஜிக் அட்ஜஸ்ட்மென்ட் ஏரியா (Responsive Fixes) */
         @media (max-width: 992px) {
             .hero {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 40px;
+                padding: 40px 0;
+                min-height: auto;
             }
             .hero-text {
                 max-width: 100%;
@@ -328,13 +329,54 @@
             }
         }
 
-        @media (max-width: 576px) {
-            /* சிறிய மொபைல்களிலும் எலிமெண்ட்டுகள் கன்டெய்னருக்குள் இருக்க உறுதி செய்கிறது */
+        @media (max-width: 600px) {
             .container {
-                padding: 0 16px;
+                padding: 0 20px;
+            }
+            header {
+                padding: 15px 0;
+            }
+            .brand h1 {
+                font-size: 19px; /* ஹெடர் டைட்டில் மொபைலுக்கு ஏற்ப கச்சிதமாக மாறும் */
+            }
+            .brand img {
+                width: 40px;
+                height: 40px;
+            }
+            /* 👑 மொபைலில் டைட்டில் எழுத்துக்கள் இடிக்காமல் இருக்க '26px' ஆக குறைக்கப்பட்டுள்ளது மச்சி! */
+            .hero-text h2 {
+                font-size: 26px; 
+                line-height: 1.5;
+                margin-bottom: 18px;
+            }
+            /* 👑 மொபைலில் பேரகிராஃப் டெக்ஸ்ட் மறையாமல் இருக்க பக்கா அலைன்மென்ட் */
+            .hero-text p {
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 30px;
+            }
+            /* 👑 மொபைலில் பட்டன் பாக்ஸ் செட்டப் */
+            .btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 14px;
             }
             .cta-buttons {
                 gap: 12px;
+            }
+            .phone-mockup {
+                width: 240px;
+                height: 480px;
+                margin-top: 20px;
+            }
+            .section-title h3 {
+                font-size: 24px;
+            }
+            .section-title p {
+                font-size: 14px;
+            }
+            .feature-card {
+                padding: 25px;
             }
         }
     </style>
