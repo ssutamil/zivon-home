@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Zivon - Zivon Novels & Info App</title>
+    <title>Zivon - Zivon Novels & Info App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
@@ -331,15 +331,13 @@
         }
 
         @media (max-width: 600px) {
-            /* 👑 [மாற்றப்பட்டுள்ளது] மொபைல் ஸ்கிரீன் விளிம்பிற்கு மிக நெருக்கமாக டெக்ஸ்ட் செல்ல கேப் 8px ஆக குறைக்கப்பட்டுள்ளது */
             .container {
-                padding: 0 8px; /* 16px-ல் இருந்து 8px ஆக குறைக்கப்பட்டுள்ளது! இப்போ டெக்ஸ்ட் இன்னும் நல்லா எட்ஜ் வரைக்கும் போகும் மச்சி */
+                padding: 0 8px; 
             }
             header {
                 padding: 15px 0;
             }
             
-            /* மொபைல் ஹெடர் லோகோ & டெக்ஸ்ட் அலைன்மென்ட் */
             .brand {
                 justify-content: space-between; 
                 gap: 0;
@@ -353,7 +351,6 @@
                 height: 42px;
             }
             
-            /* மொபைல் ஹீரோ பகுதி (சென்டர் அலைன்மென்ட் வித் ஃபுல் எட்ஜ்) */
             .hero-text {
                 align-items: center; 
                 text-align: center; 
@@ -375,7 +372,6 @@
                 width: 100%; 
             }
             
-            /* மொபைல் பட்டன் */
             .btn {
                 width: 100%;
                 padding: 15px 20px;
@@ -392,7 +388,6 @@
                 margin-top: 35px;
             }
             
-            /* ஏன் ஆப் சிறந்தது பகுதி சென்டர் அலைன்மென்ட் */
             .section-title {
                 text-align: center; 
             }
@@ -402,7 +397,6 @@
             .section-title p {
                 font-size: 16px;
             }
-            /* 👑 கார்டுகளுக்குள்ளும் டெக்ஸ்ட் இன்னும் அகலமாக தெரிய அட்ஜஸ்ட்மென்ட் */
             .feature-card {
                 padding: 20px 16px; 
                 text-align: center; 
@@ -438,8 +432,8 @@
             <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
             <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">📥 Direct APK Download</a>
-                <a href="#" class="btn btn-secondary">🤖 Google Play Store</a>
+                <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
+                <a href="#" class="btn btn-secondary" id="btnPlay">🤖 Google Play Store</a>
             </div>
         </div>
         <div class="hero-image">
@@ -460,7 +454,6 @@
                 <p>வாசகர்களின் வாசிப்பு அனுபவத்தை அடுத்த கட்டத்திற்கு கொண்டு செல்ல ஆப்பில் உள்ள சில பிரத்தியேக அம்சங்கள்!</p>
             </div>
             <div class="features-grid">
-                <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🚀</div>
                     <h4>அதிவேக லோடிங் (Zero Delay)</h4>
@@ -487,9 +480,34 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Suda Suda Updates. All Rights Reserved. Designed for Zivon Novels & Info.</p>
+            <p>&copy; 2026 Nex Medyn. All Rights Reserved. Designed for Zivon Novels & Info.</p>
         </div>
     </footer>
 
+    <script>
+        window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post');
+
+            if (idParam) {
+                var cleanPath = decodeURIComponent(idParam);
+                
+                // 👑 [ஆண்ட்ராய்டு அக்மார்க் இன்டென்ட் லாக்]: 
+                // ஆப் இன்ஸ்டால் ஆகியிருந்தா இந்த ஸ்கிரிப்ட் பிரவுசரை 0-செகண்ட்ல ஓவர்-டேக் பண்ணி ஸ்ட்ரெயிட்டா ஆப்புக்குள்ள தள்ளிவிடும்!
+                var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath + 
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
+                                encodeURIComponent(window.location.href) + ";end";
+                
+                // இன்ஸ்டன்ட் ரீ-டைரக்ட் ஃபயர் மச்சி!
+                window.location.replace(intentUrl);
+
+                // ஒருவேளை ஆப் டவுன்லோட் பட்டன்களை கிளிக் பண்ணா அந்த குறிப்பிட்ட லிங்க்கை ரீடைரக்ட் செய்ய பேக்அப் லாக்
+                var apkBtn = document.getElementById("btnApk");
+                if (apkBtn) {
+                    apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html?id=" + encodeURIComponent(cleanPath);
+                }
+            }
+        };
+    </script>
 </body>
 </html>
