@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     
     <!-- 👑 [0 செகண்ட் அசுர வேக ரீடைரக்ட் மேஜிக் லாக் மாமே]: 
-         பேஜ் லோடாகி கண்ணுல தெரியுறதுக்கு முன்னாடியே ஆப் யூசரா இருந்தா ஸ்ட்ரெயிட்டா ஆப்புக்கு தள்ளுறோம்! -->
+         ஏற்கனவே ஒருமுறை கிளிக் பண்ணியிருந்தா லேண்டிங் பேஜ்ல நிக்கவே விடாம ஸ்ட்ரெயிட்டா ஆப்புக்கு தள்ளுறோம்! -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -24,11 +24,9 @@
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
                                 "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
                 
-                // 👑 செக் பண்றோம், இவன் ஏற்கனவே நம்ம ஆப் யூசரானு!
                 var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
                 
-                // ஒருமுறை கிளிக் பண்ணியிருந்தா, குரோம் டக்குனு ஆப்பைத் திறக்க அனுமதிக்கும் மச்சி! 0 செகண்ட்ல ஃபயர்!
                 if (isAppUser || !isChrome) {
                     window.location.replace(intentUrl);
                 }
@@ -63,7 +61,7 @@
             width: 100%;
         }
 
-        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: பிரவுசர் பாப்-அப் மறைக்காத சென்டர் கார்டு டிசைன் */
+        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: ஆப் வச்சிருக்கறவனுக்கு மட்டும் சடனா ஓபன் ஆகுற சென்டர் கார்டு */
         .app-popup-overlay {
             display: none;
             position: fixed;
@@ -511,8 +509,8 @@
 </head>
 <body>
 
-    <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப் கார்டு மாமே]: 
-         லோகோ மற்றும் கம்பெனி பெயருக்கு கீழே அச்சு அசலாக துடிக்கும் ஹார்ட் பீட் பட்டன் கார்டு! -->
+    <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப்]: 
+         ஆப் வச்சிருக்கறவனுக்கு மட்டும் அக்மார்க் 0 செகண்டில் சடனா பாப்-அப் ஆகும் மாமே! -->
     <div id="zivonAppOverlay" class="app-popup-overlay">
         <div class="popup-card">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
@@ -606,18 +604,30 @@
                 var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 
                 if (isChrome) {
-                    // 👑 இவன் இன்னும் ஒருமுறை கூட ஆப் ஓபன் பண்ணலனா மட்டும் சென்டர் ஓவர்லே பாப்-அப் கார்டு காட்டுவோம்!
-                    if (!isAppUser) {
-                        var overlay = document.getElementById("zivonAppOverlay");
-                        if (overlay) {
-                            overlay.style.display = "flex"; // 👈 கச்சிதமா சென்டர்ல பாப்-அப் ஆகும் மாமே!
+                    // 👑 [ஸ்மார்ட் டைம்அவுட் வித்தை மாமே]: இவன்கிட்ட ஆப் இருக்கா இல்லையானு 0 செகண்ட்ல செக் பண்றோம்!
+                    var hasApp = false;
+                    
+                    // பேக்ரவுண்ட்ல ஆப்பைத் தூண்ட ட்ரை பண்ணுறோம்
+                    var iframe = document.createElement("iframe");
+                    iframe.style.display = "none";
+                    iframe.src = intentUrl;
+                    document.body.appendChild(iframe);
+                    
+                    // இவன்கிட்ட ஆப் இருந்தா பிரவுசர் பேக்ரவுண்டுக்கு போகும், அதை வச்சு கண்டுபிடிச்சிரலாம் மச்சி!
+                    window.onblur = function() {
+                        hasApp = true;
+                        localStorage.setItem("zivon_app_user", "true");
+                    };
+
+                    // 👑 0.5 செகண்ட் வெயிட் பண்ணும்; ஆப் வச்சிருக்கற யூசருக்கு மட்டும் சடனா பாப்-அப் அடிக்கும்!
+                    setTimeout(function() {
+                        if (!isAppUser && (hasApp || document.hidden || screenTop < 0)) {
+                            var overlay = document.getElementById("zivonAppOverlay");
+                            if (overlay) {
+                                overlay.style.display = "flex"; // 👈 ஆப் இருக்கறவனுக்கு மட்டும் சடனா பாப்-அப் லாக் ஆகும்!
+                            }
                         }
-                        
-                        var iframe = document.createElement("iframe");
-                        iframe.style.display = "none";
-                        iframe.src = intentUrl;
-                        document.body.appendChild(iframe);
-                    }
+                    }, 500);
                     
                     var bannerBtn = document.getElementById("btnBannerOpen");
                     if (bannerBtn) {
@@ -629,6 +639,7 @@
                 }
             }
 
+            // டவுன்லோட் பட்டன்கள் கிளிக் பண்ணா இவன் புது யூசர் (ஆப் இல்லாதவன்) - லேண்டிங் பேஜ்ல நிப்பான்!
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
