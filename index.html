@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     
-    <!-- 👑 [0 செகண்ட் அசுர வேக சோசியல் மீடியா ரீடைரக்ட் லாக் மாமே]: 
-         ப்ளே ஸ்டோர் ஓபன் ஆகுற பிசாசை ஒழிச்சுட்டு, ஆப் இருந்தா ஆப்புக்கும், இல்லைனா ஸ்ட்ரெயிட்டா லேண்டிங் பேஜ்லயே நிறுத்துறோம்! -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -21,28 +19,16 @@
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 [ப்ளே ஸ்டோர் லாக் முடக்கும் வித்தை]: 
-                // இங்க package=com.sudasudaupdates.zivon பக்கத்துல இருந்த ப்ளே ஸ்டோர் ஃபால்பேக் லிங்க்கை தூக்கிட்டு, 
-                // ஆப் இல்லாதவனுக்கு உங்க சொந்த லேண்டிங் பேஜ் லிங்க்கையே (window.location.href) பேக்அப்பா கொடுத்தாச்சு மச்சி!
-                // இதனால ப்ளே ஸ்டோர் ஓபன் ஆகி 'App not found' எர்ரர் வரவே வராது! ஆப் இல்லைனா லேண்டிங் பேஜ்லயே கச்சிதமா நிப்பான்!
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
-                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
-                                encodeURIComponent(window.location.href) + ";end";
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
                 
+                // 👑 செக் பண்றோம், இவன் ஏற்கனவே நம்ம ஆப் யூசரானு!
+                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
                 
-                if (!isChrome) {
+                // ஒருமுறை கிளிக் பண்ணியிருந்தா, குரோம் டக்குனு ஆப்பைத் திறக்க அனுமதிக்கும் மச்சி! 0 செகண்ட்ல ஃபயர்!
+                if (isAppUser || !isChrome) {
                     window.location.replace(intentUrl);
-                } else {
-                    // குரோம் பிரவுசராக இருந்தால் லூப் அடிக்காமல் இருக்க 0 செகண்ட்ல பேக்ரவுண்ட் செக்கிங் ஃபயர்!
-                    var iframe = document.createElement("iframe");
-                    iframe.style.display = "none";
-                    iframe.src = intentUrl;
-                    document.documentElement.appendChild(iframe);
-                    
-                    window.onblur = function() {
-                        localStorage.setItem("zivon_app_user", "true");
-                    };
                 }
             }
         })();
@@ -75,58 +61,27 @@
             width: 100%;
         }
 
-        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: ஆப் வச்சிருக்கறவனுக்கு மட்டும் சடனா ஓபன் ஆகுற சென்டர் கார்டு */
-        .app-popup-overlay {
+        /* 👑 [குரோம் பிக்ஸ் ஸ்பெஷல்]: லோகோ, பிராண்ட் நேம் இல்லாத அக்மார்க் சென்டர் பேனர் வித்தை */
+        .app-banner {
             display: none;
+            background: rgba(22, 27, 33, 0.95);
+            border-bottom: 2px solid var(--primary-color);
+            padding: 10px 20px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(16, 20, 25, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 99999;
+            z-index: 9999;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: center; /* 👈 பட்டன் கச்சிதமா சென்டர்ல வர லாக் மச்சி */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            animation: slideDown 0.4s ease-out;
         }
 
-        .popup-card {
-            background-color: var(--card-bg);
-            border: 2px solid var(--primary-color);
-            border-radius: 24px;
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            animation: zoomIn 0.3s ease-out;
-        }
-
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .popup-card img {
-            width: 65px;
-            height: 65px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-        }
-
-        .popup-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .popup-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
         }
 
         /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்]: லவ்ஸ் தட்டி தட்டக்னு துடிக்கிற அனிமேஷன் லாக் மாமே! */
@@ -134,24 +89,23 @@
             background: var(--btn-gradient);
             color: #fff;
             border: none;
-            padding: 12px 35px;
-            font-size: 15px;
+            padding: 10px 30px;
+            font-size: 14px;
             font-weight: 700;
             border-radius: 25px;
             text-decoration: none;
             cursor: pointer;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-            animation: heartBeat 1.2s infinite; 
+            animation: heartBeat 1.2s infinite; /* 👈 ஹார்ட் பீட் வேகம் இங்க தான் இருக்கு */
             display: inline-block;
-            width: 100%;
         }
 
         @keyframes heartBeat {
             0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
-            14% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            14% { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
             28% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
-            42% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            42% { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
             70% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
         }
 
@@ -523,15 +477,8 @@
 </head>
 <body>
 
-    <!-- 👑 [ZIVON பிரீமியம் ಸೆನ್ಟರ್ பாப்-அப் கார்டு]: 
-         ஆப் இருக்கறவனுக்கு மட்டும் அச்சு அசலாக துடிக்கும் ஹார்ட் பீட் பட்டன்! -->
-    <div id="zivonAppOverlay" class="app-popup-overlay">
-        <div class="popup-card">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
-            <h3>Zivon Novels & Info</h3>
-            <p>SUDA SUDA UPDATES</p>
-            <button id="btnBannerOpen" class="banner-btn">💓 OPEN IN APP 💓</button>
-        </div>
+    <div id="chromeAppBanner" class="app-banner">
+        <button id="btnBannerOpen" class="banner-btn">💓 OPEN IN APP 💓</button>
     </div>
 
     <header id="appHeader">
@@ -588,7 +535,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
                     <h4>அச்சு அசலான வாசிப்பு சுகம்</h4>
-                    <p>பிரவுசரின் தேவையில்லாத மெனுக்கள் இன்றி, உங்களுக்கு வசதியான எழுத்து அளவு (Font Slider), டார்க் மோட் போன்ற அதி நவீன கஸ்டமைஸ் வசதிகளுடன் சொகுசாக படிக்கலாம்.</p>
+                    <p>பிரவுசரின் தேவையில்லாத மெனுக்கள் இன்றி, உங்களுக்கு வசதியான எழுத்து அளவு (Font Slider), டார்க் மோட் போன்ற அதிநவீன கஸ்டமைஸ் வசதிகளுடன் சொகுசாக படிக்கலாம்.</p>
                 </div>
             </div>
         </div>
@@ -611,32 +558,26 @@
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 [ப்ளே ஸ்டோர் பிசாசு ஒழிப்பு லாக்]: S.browser_fallback_url-ல் உங்க லேண்டிங் பேஜ் யூஆர்எல்லையே லாக் பண்ணியாச்சு!
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
-                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
-                                encodeURIComponent(window.location.href) + ";end";
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
                 
                 var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
                 var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 
                 if (isChrome) {
-                    var hasApp = false;
-                    
-                    window.onblur = function() {
-                        hasApp = true;
-                        localStorage.setItem("zivon_app_user", "true");
-                    };
-
-                    // 👑 [பக்கா பினிஷ்ட் கண்டிஷன் லாக்]: ஆப் வச்சிருக்கற பழைய யூசருக்கு மட்டும் சடனா கார்டு பாப்-அப் ஆகும்!
-                    // ஆப் இல்லாத புது யூசருக்கு ப்ளே ஸ்டோர் ஓபன் ஆகாமல், அப்படியே லேண்டிங் பேஜ் நிக்கும் மாமே!
-                    setTimeout(function() {
-                        if (hasApp || document.hidden || screenTop < 0 || isAppUser) {
-                            var overlay = document.getElementById("zivonAppOverlay");
-                            if (overlay) {
-                                overlay.style.display = "flex"; 
-                            }
+                    if (!isAppUser) {
+                        var banner = document.getElementById("chromeAppBanner");
+                        var header = document.getElementById("appHeader");
+                        if (banner && header) {
+                            banner.style.display = "flex";
+                            header.style.marginTop = "60px";
                         }
-                    }, 300);
+                        
+                        var iframe = document.createElement("iframe");
+                        iframe.style.display = "none";
+                        iframe.src = intentUrl;
+                        document.body.appendChild(iframe);
+                    }
                     
                     var bannerBtn = document.getElementById("btnBannerOpen");
                     if (bannerBtn) {
