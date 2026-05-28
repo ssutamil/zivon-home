@@ -63,64 +63,84 @@
             width: 100%;
         }
 
-        /* 👑 [குரோம் பிக்ஸ் ஸ்பெஷல்]: ஸ்மார்ட் பேனர் டிசைன் வித்தை மாமே */
-        .app-banner {
+        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: பிரவுசர் பாப்-அப் மறைக்காத சென்டர் கார்டு டிசைன் */
+        .app-popup-overlay {
             display: none;
-            background: linear-gradient(90deg, #161b21 0%, #101419 100%);
-            border-bottom: 2px solid var(--primary-color);
-            padding: 12px 20px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 9999;
+            height: 100%;
+            background: rgba(16, 20, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            animation: slideDown 0.4s ease-out;
+            justify-content: center;
+            padding: 20px;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+        .popup-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            animation: zoomIn 0.3s ease-out;
         }
 
-        .banner-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .banner-info img {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .popup-card img {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
 
-        .banner-info p {
-            font-size: 13px;
-            font-weight: 600;
+        .popup-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
             color: var(--text-main);
-            line-height: 1.3;
         }
 
-        .banner-info span {
-            font-size: 11px;
+        .popup-card p {
+            font-size: 13px;
             color: var(--text-muted);
-            display: block;
+            margin-bottom: 24px;
         }
 
+        /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்]: லவ்ஸ் தட்டி தட்டக்னு துடிக்கிற அனிமேஷன் லாக் மாமே! */
         .banner-btn {
             background: var(--btn-gradient);
             color: #fff;
             border: none;
-            padding: 8px 16px;
-            font-size: 12px;
+            padding: 12px 35px;
+            font-size: 15px;
             font-weight: 700;
-            border-radius: 20px;
+            border-radius: 25px;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            animation: heartBeat 1.2s infinite; 
+            display: inline-block;
+            width: 100%;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            14% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            28% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            42% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
         }
 
         /* 👑 கச்சிதமான ரெஸ்பான்சிவ் கன்டெய்னர் வித்தை */
@@ -171,7 +191,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 👑 ஹீரோ செக்ஷன் */
+        /* 👑 HERO செக்ஷன் */
         .hero {
             padding: 80px 0 60px 0;
             display: flex;
@@ -188,7 +208,6 @@
             word-wrap: break-word;
         }
 
-        /* 💻 கம்ப்யூட்டருக்கான அசல் பெரிய சைஸ் டைட்டில் */
         .hero-text h2 {
             font-size: 42px;
             line-height: 1.4;
@@ -207,7 +226,7 @@
             margin-bottom: 35px;
         }
 
-        /* 👑 டவுன்லோட் பட்டன்கள் */
+        /* 👑 cta பட்டன்கள் */
         .cta-buttons {
             display: flex;
             gap: 16px;
@@ -262,7 +281,6 @@
             max-width: 100%;
         }
 
-        /* 👑 போன் பிரேம் மாக்கப் */
         .phone-mockup {
             width: 280px;
             height: 560px;
@@ -327,7 +345,7 @@
             100% { transform: translateY(0px); }
         }
 
-        /* 👑 ஏன் வெப்சைட்டை விட ஆப் பெஸ்ட் பகுதி */
+        /* 👑 FEATURES செக்ஷன் */
         .features-section {
             padding: 80px 0;
             background-color: var(--card-bg);
@@ -401,7 +419,7 @@
             width: 100%;
         }
 
-        /* 📱 👑 மொபைலுக்கான பக்கா மேஜிக் அட்ஜஸ்ட்μενட் ஏரியா (Responsive Fixes) */
+        /* 📱 மொபைல் அட்ஜஸ்ட்மென்ட் */
         @media (max-width: 992px) {
             .hero {
                 flex-direction: column;
@@ -427,7 +445,6 @@
             header {
                 padding: 15px 0;
             }
-            
             .brand {
                 justify-content: space-between; 
                 gap: 0;
@@ -440,20 +457,17 @@
                 width: 42px;
                 height: 42px;
             }
-            
             .hero-text {
                 align-items: center; 
                 text-align: center; 
                 width: 100%;
             }
-            
             .hero-text h2 {
                 font-size: 30px; 
                 line-height: 1.4;
                 margin-bottom: 22px;
                 width: 100%; 
             }
-            
             .hero-text p {
                 font-size: 17px; 
                 line-height: 1.6;
@@ -461,7 +475,6 @@
                 color: #e2e8f0; 
                 width: 100%; 
             }
-            
             .btn {
                 width: 100%;
                 padding: 15px 20px;
@@ -477,15 +490,8 @@
                 height: 500px;
                 margin-top: 35px;
             }
-            
-            .section-title {
-                text-align: center; 
-            }
             .section-title h3 {
                 font-size: 26px;
-            }
-            .section-title p {
-                font-size: 16px;
             }
             .feature-card {
                 padding: 20px 16px; 
@@ -500,24 +506,20 @@
                 line-height: 1.6;
                 color: #cbd5e1;
             }
-            footer {
-                font-size: 15px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 👑 [குரோம் ஸ்பெஷல்]: முதல்முறை மட்டும் காட்டும் ஸ்மார்ட் பேனர் ಮಾಮೇ -->
-    <div id="chromeAppBanner" class="app-banner">
-        <div class="banner-info">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="App Icon">
-            <div>
-                <p>Zivon Novels & Info</p>
-                <span>SUDA SUDA UPDATES</span>
-            </div>
+    <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப் கார்டு மாமே]: 
+         லோகோ மற்றும் கம்பெனி பெயருக்கு கீழே அச்சு அசலாக துடிக்கும் ஹார்ட் பீட் பட்டன் கார்டு! -->
+    <div id="zivonAppOverlay" class="app-popup-overlay">
+        <div class="popup-card">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
+            <h3>Zivon Novels & Info</h3>
+            <p>SUDA SUDA UPDATES</p>
+            <button id="btnBannerOpen" class="banner-btn">💓 OPEN IN APP 💓</button>
         </div>
-        <button id="btnBannerOpen" class="banner-btn">OPEN IN APP</button>
     </div>
 
     <header id="appHeader">
@@ -556,7 +558,6 @@
                 <p>வாசகர்களின் வாசிப்பு அனுபவத்தை அடுத்த கட்டத்திற்கு கொண்டு செல்ல ஆப்பில் உள்ள சில பிரத்தியேக அம்சங்கள்!</p>
             </div>
             <div class="features-grid">
-                <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🚀</div>
                     <h4>அதிவேக லோடிங் (Zero Delay)</h4>
@@ -605,34 +606,29 @@
                 var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 
                 if (isChrome) {
-                    // 👑 இவன் இன்னும் ஒருமுறை கூட ஆப் ஓபன் பண்ணலனா மட்டும் பேனர் காட்டி கிளிக் பண்ண வைப்போம்!
+                    // 👑 இவன் இன்னும் ஒருமுறை கூட ஆப் ஓபன் பண்ணலனா மட்டும் சென்டர் ஓவர்லே பாப்-அப் கார்டு காட்டுவோம்!
                     if (!isAppUser) {
-                        var banner = document.getElementById("chromeAppBanner");
-                        var header = document.getElementById("appHeader");
-                        if (banner && header) {
-                            banner.style.display = "flex";
-                            header.style.marginTop = "60px";
+                        var overlay = document.getElementById("zivonAppOverlay");
+                        if (overlay) {
+                            overlay.style.display = "flex"; // 👈 கச்சிதமா சென்டர்ல பாப்-அப் ஆகும் மாமே!
                         }
                         
-                        // பேக்ரவுண்ட்ல ஒருமுறை ஆப்பைத் தூண்ட ட்ரை பண்ணுவோம்
                         var iframe = document.createElement("iframe");
                         iframe.style.display = "none";
                         iframe.src = intentUrl;
                         document.body.appendChild(iframe);
                     }
                     
-                    // 👑 பேனர் ஓபன் பட்டன் கிளிக் லாஜிக் - ஒருமுறை கிளிக் பண்ணிட்டா லோக்கல் மெமரி லாக் ஆகிடும்!
                     var bannerBtn = document.getElementById("btnBannerOpen");
                     if (bannerBtn) {
                         bannerBtn.onclick = function() {
-                            localStorage.setItem("zivon_app_user", "true"); // 👈 லாக் பண்ணியாச்சு மாமே!
+                            localStorage.setItem("zivon_app_user", "true");
                             window.location.href = intentUrl;
                         };
                     }
                 }
             }
 
-            // டவுன்லோட் பட்டன்கள் கிளிக் பண்ணாலும் இவன் நம்ம ஆப் யூசர் தான்! லாக் பண்ணிடுவோம்!
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
