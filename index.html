@@ -62,7 +62,7 @@
 
         /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் - இப்போதைக்கு முற்றிலும் முடக்கப்பட்டுள்ளது] */
         .app-popup-overlay {
-            display: none; /* ஆரம்பத்தில் மறைத்து வைக்கப்படும் */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -130,12 +130,13 @@
             width: 100%;
         }
 
-        /* 👑 [ஹெட்டிங்குக்கு மேலே வரும் புதிய சென்டர் ஓபன் பட்டன் ஸ்டைல்] */
+        /* 👑 [ஹெட்டிங்குக்கு கீழே மற்றும் லோகோ பாருக்கு ஒட்டாமல் வர வைக்கப்பட்ட ஸ்பேசிங்] */
         .inline-open-container {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-top: 35px;     /* ஹெடர் பாரில் ஒட்டாமல் இருக்க ஸ்பேஸ் */
+            margin-bottom: 35px;  /* கீழே உள்ள ஹெடிங்குக்கு இடைவெளி */
         }
 
         .btn-inline-open {
@@ -221,7 +222,7 @@
         }
 
         .hero {
-            padding: 80px 0 60px 0;
+            padding: 40px 0 60px 0; /* மேல் பக்க பேடிங் அட்ஜஸ்ட் செய்யப்பட்டுள்ளது */
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -448,7 +449,7 @@
             .hero {
                 flex-direction: column;
                 text-align: center;
-                padding: 40px 0;
+                padding: 20px 0 40px 0;
                 min-height: auto;
             }
             .hero-text {
@@ -647,18 +648,17 @@
                                 encodeURIComponent(fallbackUrl) + ";end";
 
                 if (!isFallback) {
-                    // ஆப் இருக்கான்னு செக் பண்ண ஃபயர் பண்றோம்
+                    // பக்கத்திற்குள் நுழைந்ததும் முதலில் ஆப் இருக்கா என செக் செய்து ஓபன் செய்ய முயலும்
                     window.location.href = intentUrl;
                     
                     // 👑 [ஸ்மார்ட் வித்தை]: ஆப் இல்லாத புது யூசர் 1.5 செகண்ட் இதே பக்கத்துல நின்னா...
-                    // அவனுக்கு பாப்-அப் காட்டக் கூடாது! டைரக்டா மெயின் பேஜ்ல இருக்குற APK பட்டனை துடிக்க வைக்கிறோம் (Pulse)!
                     setTimeout(function() {
                         var overlay = document.getElementById("zivonAppOverlay");
                         if (overlay) {
                             overlay.style.display = "none"; // பாப்-அப் வராது, முற்றிலும் தடா!
                         }
                         if (apkBtn) {
-                            apkBtn.classList.add("pulse-animation"); // டவுன்லோட் பட்டன் துடிக்கும், யூசர் கிளிக் பண்ணுவான்!
+                            apkBtn.classList.add("pulse-animation"); // டவுன்லோட் பட்டன் துடிக்கும்!
                         }
                     }, 1500);
 
@@ -673,24 +673,36 @@
                     }
                 }
 
-                // 👑 [புதிய சென்டர் பட்டன் க்ளிக் லாஜிக்]
+                // 👑 [பக்கா பிக்ஸ் செய்யப்பட்ட சென்டர் பட்டன் க்ளிக் லாஜிக்]
                 var centerOpenBtn = document.getElementById("btnCenterOpen");
                 if (centerOpenBtn) {
                     centerOpenBtn.onclick = function() {
-                        if (!isFallback) {
-                            // ஆப் இருந்தா ஓபன் பண்ண ட்ரை பண்ணும் (சில பிரவுசர்கள் யூசர் கிளிக் பண்ணா தான் இத விடுவானுங்க)
+                        // யூசர் பட்டனை கிளிக் பண்ணா, அவன் ஃபால்பேக் லிங்க்கில் இருந்தாலும் சரி, இல்லாவிட்டாலும் சரி...
+                        // மொபைலில் ஆப் இருந்தால் முதலில் கண்டிப்பாய் ஆப் தான் ஓபன் ஆக வேண்டும்!
+                        var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                        
+                        if (isMobile) {
+                            // மொபைல் டிவைஸாக இருந்தால் ஆப் ஓபன் செய்ய ட்ரை பண்ணும்
                             window.location.href = intentUrl;
+                            
+                            // ஒருவேளை ஆப் இல்லை என்றால் 2 செகண்டில் டவுன்லோடுக்கு ஸ்மூத்தாக ஸ்க்ரோல் செய்யும்
+                            setTimeout(function() {
+                                if (apkBtn) {
+                                    apkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    apkBtn.classList.add("pulse-animation");
+                                }
+                            }, 2000);
                         } else {
-                            // ஆப் இல்லாத யூசரா இருந்தா, ஸ்மூத்தா டவுன்லோட் பட்டன் ஏரியாவுக்கு தள்ளிவிடும்!
+                            // டெஸ்க்டாப் / கணினியாக இருந்தால் நேரடியாக டவுன்லோடுக்கு அழைத்துச் செல்லும்
                             if (apkBtn) {
                                 apkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                apkBtn.classList.add("pulse-animation"); // கன்பார்மா துடிக்க வைக்கும்!
+                                apkBtn.classList.add("pulse-animation");
                             }
                         }
                     };
                 }
 
-                // ஒருவேளை ஓவர்லே பாப்-அப் பட்டனை கிளிக் பண்ணா மட்டும் ஆப் லிங்க் வேலை செய்யும்
+                // பாப்-அப் பட்டனை கிளிக் செய்தாலும் ஆப் லிங்க் வேலை செய்யும்
                 var bannerBtn = document.getElementById("btnBannerOpen");
                 if (bannerBtn) {
                     bannerBtn.onclick = function() {
