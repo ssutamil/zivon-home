@@ -254,7 +254,7 @@
             word-wrap: break-word;
         }
 
-        /* 👑 [சைஸ் பெருசு பண்ணியாச்சு மாமே] */
+        /* 👑 [ไซส์ பெருசு பண்ணியாச்சு மாமே] */
         .hero-text h2 {
             font-size: 48px; /* 42px லிருந்து 48px ஆக உயர்த்தப்பட்டுள்ளது */
             line-height: 1.3;
@@ -550,11 +550,14 @@
 
     <section class="container hero">
         <div class="hero-text">
+            <!-- 👑 [ஹெட்டிங் மேலே கொண்டு வரப்பட்டது] -->
+            <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
+            
+            <!-- 👑 [Open In App பட்டன் ஹெட்டிங்குக்கு கீழே கொண்டு வரப்பட்டது] -->
             <div class="inline-open-container">
                 <button id="btnCenterOpen" class="btn-inline-open">💓 OPEN IN APP 💓</button>
             </div>
             
-            <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
             <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்குக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
             <div class="cta-buttons" id="downloadArea">
                 <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
@@ -609,7 +612,7 @@
         </div>
     </footer>
 
-    <!-- 👑 [புதுப்பிக்கப்பட்ட பக்-ஃப்ரீ அல்ட்ரா ஸ்மார்ட் ஜாவாஸ்கிரிப்ட்] -->
+    <!-- 👑 [புதுப்பிக்கப்பட்ட பக்-ஃப்ரீ அல்ルトラ ஸ்மார்ட் ஜாவாஸ்கிரிப்ட்] -->
     <script>
         window.onload = function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -625,19 +628,19 @@
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
             }
 
+            // காமன் இன்டென்ட் URL செட்டப்
+            var cleanPath = decodeURIComponent(idParam);
+            if (!cleanPath.startsWith("/")) {
+                cleanPath = "/" + cleanPath;
+            }
+            var currentCleanUrl = window.location.origin + window.location.pathname + "?path=" + encodeURIComponent(idParam);
+            var fallbackUrl = currentCleanUrl + "&fallback=true";
+
+            var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
+                            "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
+                            encodeURIComponent(fallbackUrl) + ";end";
+
             if (idParam !== "") {
-                var cleanPath = decodeURIComponent(idParam);
-                if (!cleanPath.startsWith("/")) {
-                    cleanPath = "/" + cleanPath;
-                }
-                
-                var currentCleanUrl = window.location.origin + window.location.pathname + "?path=" + encodeURIComponent(idParam);
-                var fallbackUrl = currentCleanUrl + "&fallback=true";
-
-                var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
-                                "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
-                                encodeURIComponent(fallbackUrl) + ";end";
-
                 if (!isFallback) {
                     window.location.href = intentUrl;
                     
@@ -646,69 +649,50 @@
                         if (overlay) { overlay.style.display = "none"; }
                         if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
                     }, 1500);
-
                 } else {
                     var overlay = document.getElementById("zivonAppOverlay");
                     if (overlay) { overlay.style.display = "none"; }
                     if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
                 }
+            }
 
-                // 👑 [ஸ்மார்ட் வித்தை - ஆப் இல்லாதவனுக்கு ரீஃப்ரெஷ் ஆகாமல் டவுன்லோடுக்கு கூட்டிட்டு போகும் லாஜிக்]
-                function handleAppOpenAttempt() {
-                    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            // 👑 [ஸ்மார்ட் வித்தை - ஆப் ஓபன் செய்ய ட்ரை பண்ணி 3 செகண்ட் கழித்து டவுன்லோடுக்கு கூட்டிட்டு போகும் லாஜிக்]
+            function handleAppOpenAttempt(e) {
+                if(e) e.preventDefault(); // பக்கம் ரீலோடு ஆகாமல் தடுக்கிறது
+                
+                var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                
+                if (isMobile && idParam !== "") {
+                    // முதலில் ஆப் ஓபன் செய்ய முயற்சிக்கும்
+                    window.location.href = intentUrl;
                     
-                    if (isMobile) {
-                        // ஆப் ஓபன் செய்ய ட்ரை பண்ணும்
-                        window.location.href = intentUrl;
-                        
-                        // பக்கத்தை விட்டு வெளியேறாமல் (ஆப் இல்லாததால்) பிரவுசரிலேயே நின்றால் 1 செகண்டில் டவுன்லோடுக்கு ஸ்க்ரோல் ஆகும்
-                        var startTime = Date.now();
-                        setTimeout(function() {
-                            // யூசர் இன்னும் இதே பக்கத்தில் தான் இருக்கிறான் என்பதை உறுதி செய்கிறோம்
-                            if (Date.now() - startTime < 1500) {
-                                var downloadSection = document.getElementById("downloadArea");
-                                if (downloadSection) {
-                                    downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                }
-                                if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
-                            }
-                        }, 1000);
-                    } else {
-                        // கணினியாக இருந்தால் நேரடியாக டவுன்லோடு
+                    // ஆப் இல்லாத பட்சத்தில் 3 செகண்ட் வெயிட் பண்ணி டவுன்லோடு ஏரியாவிற்கு ஸ்மூத் ஸ்க்ரோல் ஆகும்
+                    setTimeout(function() {
                         var downloadSection = document.getElementById("downloadArea");
                         if (downloadSection) {
                             downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                         if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
-                    }
-                }
-
-                // மூன்று பட்டன்களுக்கும் ஒரே பக்கா லாஜிக் செட் செய்யப்பட்டுள்ளது
-                var centerOpenBtn = document.getElementById("btnCenterOpen");
-                if (centerOpenBtn) { centerOpenBtn.onclick = handleAppOpenAttempt; }
-
-                var headerOpenBtn = document.getElementById("btnHeaderOpen");
-                if (headerOpenBtn) { headerOpenBtn.onclick = handleAppOpenAttempt; }
-
-                var bannerBtn = document.getElementById("btnBannerOpen");
-                if (bannerBtn) { bannerBtn.onclick = handleAppOpenAttempt; }
-
-            } else {
-                // ஐடி பேராமீட்டர் இல்லாத போது நேரடியாக டவுன்லோடுக்கு ஸ்க்ரோல் ஆகும்
-                function scrollToDownload() {
+                    }, 3000);
+                } else {
+                    // பிசி அல்லது பேராமீட்டர் இல்லை என்றால் நேரடியாக டவுன்லோடு
                     var downloadSection = document.getElementById("downloadArea");
                     if (downloadSection) {
                         downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                     if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
                 }
-                
-                var centerOpenBtn = document.getElementById("btnCenterOpen");
-                if (centerOpenBtn) { centerOpenBtn.onclick = scrollToDownload; }
-                
-                var headerOpenBtn = document.getElementById("btnHeaderOpen");
-                if (headerOpenBtn) { headerOpenBtn.onclick = scrollToDownload; }
             }
+
+            // பட்டன் கிளிக்குகளுக்கு லாஜிக் அசைன் செய்யப்படுகிறது
+            var centerOpenBtn = document.getElementById("btnCenterOpen");
+            if (centerOpenBtn) { centerOpenBtn.onclick = handleAppOpenAttempt; }
+
+            var headerOpenBtn = document.getElementById("btnHeaderOpen");
+            if (headerOpenBtn) { headerOpenBtn.onclick = handleAppOpenAttempt; }
+
+            var bannerBtn = document.getElementById("btnBannerOpen");
+            if (bannerBtn) { bannerBtn.onclick = handleAppOpenAttempt; }
         };
     </script>
 </body>
