@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     
-    <!-- 👑 [0 செகண்ட் அசுர வேக ரீடைரக்ட் மேஜிக் லாக் மாமே]: 
-         ஏற்கனவே ஒருமுறை கிளிக் பண்ணியிருந்தா லேண்டிங் பேஜ்ல நிக்கவே விடாம ஸ்ட்ரெயிட்டா ஆப்புக்கு தள்ளுறோம்! -->
+    <!-- 👑 [0 செகண்ட் சோசியல் மீடியா அசுர வேக ரீடைரக்ட் மேஜிக் லாக் மாமே]: 
+         OneSignal, WhatsApp லிங்க் கிளிக் பண்ண அடுத்த கணமே பிரவுசரை ஓவர்-டேக் பண்ணி ஸ்ட்ரெயிட்டா ஆப்புக்கு தள்ளுறோம்! -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -24,11 +24,22 @@
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
                                 "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
                 
-                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
                 
-                if (isAppUser || !isChrome) {
+                // 👑 [0 செகண்ட் உலக மகா வித்தை]: இவன் சோசியல் மீடியா வழியா வர்ற பழைய யூசரா இருந்தா பிரவுசர்ல நிக்காம ஸ்ட்ரெயிட்டா ஆப்புக்கு பாயும்!
+                if (!isChrome) {
                     window.location.replace(intentUrl);
+                } else {
+                    // குரோம் பிரவுசராக இருந்தால் லூப் அடிக்காமல் இருக்க 0 செகண்ட்ல பேக்ரவுண்ட் செக்கிங் ஃபயர்!
+                    var iframe = document.createElement("iframe");
+                    iframe.style.display = "none";
+                    iframe.src = intentUrl;
+                    document.documentElement.appendChild(iframe);
+                    
+                    // ஒருவேளை ஆப் பேக்ரவுண்ட்ல ஓபன் ஆகிடுச்சுன்னா லோக்கல் மெமரிய லாக் பண்ணிடுறோம்!
+                    window.onblur = function() {
+                        localStorage.setItem("zivon_app_user", "true");
+                    };
                 }
             }
         })();
@@ -510,7 +521,7 @@
 <body>
 
     <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப்]: 
-         ஆப் வச்சிருக்கறவனுக்கு மட்டும் அக்மார்க் 0 செகண்டில் சடனா பாப்-அப் ஆகும் மாமே! -->
+         ஆப் வச்சிருக்கறவனுக்கு மட்டும் அக்மார்க் 0.3 செகண்டில் சடனா பாப்-அப் ஆகும் மாமே! -->
     <div id="zivonAppOverlay" class="app-popup-overlay">
         <div class="popup-card">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
@@ -604,30 +615,23 @@
                 var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 
                 if (isChrome) {
-                    // 👑 [ஸ்மார்ட் டைம்அவுட் வித்தை மாமே]: இவன்கிட்ட ஆப் இருக்கா இல்லையானு 0 செகண்ட்ல செக் பண்றோம்!
+                    // 👑 [ஸ்மார்ட் டைம்அவுட் வித்தை மாமே]: இவன்கிட்ட ஆப் இருக்கா இல்லையானு 0.3 செகண்ட்ல அக்மார்க் செக் பண்றோம்!
                     var hasApp = false;
                     
-                    // பேக்ரவுண்ட்ல ஆப்பைத் தூண்ட ட்ரை பண்ணுறோம்
-                    var iframe = document.createElement("iframe");
-                    iframe.style.display = "none";
-                    iframe.src = intentUrl;
-                    document.body.appendChild(iframe);
-                    
-                    // இவன்கிட்ட ஆப் இருந்தா பிரவுசர் பேக்ரவுண்டுக்கு போகும், அதை வச்சு கண்டுபிடிச்சிரலாம் மச்சி!
                     window.onblur = function() {
                         hasApp = true;
                         localStorage.setItem("zivon_app_user", "true");
                     };
 
-                    // 👑 0.5 செகண்ட் வெயிட் பண்ணும்; ஆப் வச்சிருக்கற யூசருக்கு மட்டும் சடனா பாப்-அப் அடிக்கும்!
+                    // 👑 ஆப் வச்சிருக்கற யூசருக்கு மட்டும் சடனா பாப்-அப் கார்டு ஓபன் ஆகும்! ஆப் இல்லாதவனுக்கு லேண்டிங் பேஜ் அப்படியே நிக்கும்!
                     setTimeout(function() {
-                        if (!isAppUser && (hasApp || document.hidden || screenTop < 0)) {
+                        if (hasApp || document.hidden || screenTop < 0 || isAppUser) {
                             var overlay = document.getElementById("zivonAppOverlay");
                             if (overlay) {
-                                overlay.style.display = "flex"; // 👈 ஆப் இருக்கறவனுக்கு மட்டும் சடனா பாப்-அப் லாக் ஆகும்!
+                                overlay.style.display = "flex"; 
                             }
                         }
-                    }, 500);
+                    }, 300);
                     
                     var bannerBtn = document.getElementById("btnBannerOpen");
                     if (bannerBtn) {
@@ -639,7 +643,6 @@
                 }
             }
 
-            // டவுன்லோட் பட்டன்கள் கிளிக் பண்ணா இவன் புது யூசர் (ஆப் இல்லாதவன்) - லேண்டிங் பேஜ்ல நிப்பான்!
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
