@@ -7,6 +7,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 👑 [0 செகண்ட் அசுர வேக ரீடைரக்ட் மேஜிக் லாக் மாமே]: 
+         ப்ளே ஸ்டோர் பக்கமே போகாம, ஆப் இருந்தா ஆப்புக்கும், இல்லைனா ஸ்ட்ரெயிட்டா லேண்டிங் பேஜ்லயே நிறுத்துறோம்! -->
+    <script>
+        (function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
+            
+            if (idParam !== "") {
+                var cleanPath = decodeURIComponent(idParam);
+                if (!cleanPath.startsWith("/")) {
+                    cleanPath = "/" + cleanPath;
+                }
+                
+                // 👑 [ப்ளே ஸ்டோர் லாக் முடக்கும் வித்தை]: 
+                // ஆப் இல்லாதவனுக்கு உங்க சொந்த லேண்டிங் பேஜ் லிங்க்கையே (window.location.href) பேக்அப்பா கொடுத்தாச்சு மச்சி!
+                // இதனால ப்ளே ஸ்டோர் ஓபன் ஆகி 'App not found' எர்ரர் வரவே வராது! ஆப் இல்லைனா லேண்டிங் பேஜ்லயே கச்சிதமா நிப்பான்!
+                var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
+                                encodeURIComponent(window.location.href) + ";end";
+                
+                var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
+                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
+                
+                // ஒருமுறை கிளிக் பண்ணியிருந்தா அல்லது குரோம் இல்லைனா 0 செகண்ட்ல ஸ்ட்ரெயிட்டா ஆப்புக்கு ஃபயர்!
+                if (isAppUser || !isChrome) {
+                    window.location.replace(intentUrl);
+                }
+            }
+        })();
+    </script>
+
     <style>
         /* 👑 பிரீமியம் மாடர்ன் டார்க் தீம் செட்டப் */
         :root {
@@ -34,64 +66,84 @@
             width: 100%;
         }
 
-        /* 👑 [குரோம் பிக்ஸ் ஸ்பெஷல்]: ஸ்மார்ட் பேனர் டிசைன் வித்தை மாமே */
-        .app-banner {
+        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: ஆப் வச்சிருக்கறவனுக்கு மட்டும் சென்டர்ல ஓபன் ஆகுற கார்டு */
+        .app-popup-overlay {
             display: none;
-            background: linear-gradient(90deg, #161b21 0%, #101419 100%);
-            border-bottom: 2px solid var(--primary-color);
-            padding: 12px 20px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 9999;
+            height: 100%;
+            background: rgba(16, 20, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            animation: slideDown 0.4s ease-out;
+            justify-content: center;
+            padding: 20px;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+        .popup-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            animation: zoomIn 0.3s ease-out;
         }
 
-        .banner-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .banner-info img {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .popup-card img {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
 
-        .banner-info p {
-            font-size: 13px;
-            font-weight: 600;
+        .popup-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
             color: var(--text-main);
-            line-height: 1.3;
         }
 
-        .banner-info span {
-            font-size: 11px;
+        .popup-card p {
+            font-size: 13px;
             color: var(--text-muted);
-            display: block;
+            margin-bottom: 24px;
         }
 
+        /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்]: லவ்ஸ் தட்டி தட்டக்னு துடிக்கிற அனிமேஷன் லாக் மாமே! */
         .banner-btn {
             background: var(--btn-gradient);
             color: #fff;
             border: none;
-            padding: 8px 16px;
-            font-size: 12px;
+            padding: 12px 35px;
+            font-size: 15px;
             font-weight: 700;
-            border-radius: 20px;
+            border-radius: 25px;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            animation: heartBeat 1.2s infinite; 
+            display: inline-block;
+            width: 100%;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            14% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            28% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            42% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
         }
 
         /* 👑 கச்சிதமான ரெஸ்பான்சிவ் கன்டெய்னர் வித்தை */
@@ -142,7 +194,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 👑 ஹீரோ செக்ஷன் */
+        /* 👑 HERO செக்ஷன் */
         .hero {
             padding: 80px 0 60px 0;
             display: flex;
@@ -159,7 +211,6 @@
             word-wrap: break-word;
         }
 
-        /* 💻 கம்ப்யூட்டருக்கான அசல் பெரிய சைஸ் டைட்டில் */
         .hero-text h2 {
             font-size: 42px;
             line-height: 1.4;
@@ -178,7 +229,7 @@
             margin-bottom: 35px;
         }
 
-        /* 👑 டவுன்லோட் பட்டன்கள் */
+        /* 👑 cta பட்டன்கள் */
         .cta-buttons {
             display: flex;
             gap: 16px;
@@ -233,7 +284,6 @@
             max-width: 100%;
         }
 
-        /* 👑 போன் பிரேம் மாக்கப் */
         .phone-mockup {
             width: 280px;
             height: 560px;
@@ -298,7 +348,7 @@
             100% { transform: translateY(0px); }
         }
 
-        /* 👑 ஏன் வெப்சைட்டை விட ஆப் பெஸ்ட் பகுதி */
+        /* 👑 FEATURES செக்ஷன் */
         .features-section {
             padding: 80px 0;
             background-color: var(--card-bg);
@@ -372,7 +422,7 @@
             width: 100%;
         }
 
-        /* 📱 👑 மொபைலுக்கான பக்கா மேஜிக் அட்ஜஸ்ட்மென்ட் ஏரியா (Responsive Fixes) */
+        /* 📱 மொபைல் அட்ஜஸ்ட்மென்ட் */
         @media (max-width: 992px) {
             .hero {
                 flex-direction: column;
@@ -398,7 +448,6 @@
             header {
                 padding: 15px 0;
             }
-            
             .brand {
                 justify-content: space-between; 
                 gap: 0;
@@ -411,20 +460,17 @@
                 width: 42px;
                 height: 42px;
             }
-            
             .hero-text {
                 align-items: center; 
                 text-align: center; 
                 width: 100%;
             }
-            
             .hero-text h2 {
                 font-size: 30px; 
                 line-height: 1.4;
                 margin-bottom: 22px;
                 width: 100%; 
             }
-            
             .hero-text p {
                 font-size: 17px; 
                 line-height: 1.6;
@@ -432,7 +478,6 @@
                 color: #e2e8f0; 
                 width: 100%; 
             }
-            
             .btn {
                 width: 100%;
                 padding: 15px 20px;
@@ -448,15 +493,8 @@
                 height: 500px;
                 margin-top: 35px;
             }
-            
-            .section-title {
-                text-align: center; 
-            }
             .section-title h3 {
                 font-size: 26px;
-            }
-            .section-title p {
-                font-size: 16px;
             }
             .feature-card {
                 padding: 20px 16px; 
@@ -471,23 +509,20 @@
                 line-height: 1.6;
                 color: #cbd5e1;
             }
-            footer {
-                font-size: 15px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <div id="chromeAppBanner" class="app-banner">
-        <div class="banner-info">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="App Icon">
-            <div>
-                <p>Zivon Novels & Info</p>
-                <span>SUDA SUDA UPDATES</span>
-            </div>
+    <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப் கார்டு]: 
+         ஆப் வச்சிருக்கறவனுக்கு மட்டும் அக்மார்க் 0.3 செகண்டில் சடனா பாப்-அப் ஆகும் மாமே! -->
+    <div id="zivonAppOverlay" class="app-popup-overlay">
+        <div class="popup-card">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
+            <h3>Zivon Novels & Info</h3>
+            <p>SUDA SUDA UPDATES</p>
+            <button id="btnBannerOpen" class="banner-btn">💓 OPEN IN APP 💓</button>
         </div>
-        <button id="btnBannerOpen" class="banner-btn">OPEN IN APP</button>
     </div>
 
     <header id="appHeader">
@@ -502,7 +537,7 @@
     <section class="container hero">
         <div class="hero-text">
             <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
-            <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ 이ன்றி உங்களுக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
+            <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
             <div class="cta-buttons">
                 <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
                 <a href="#" class="btn btn-secondary" id="btnPlay">🤖 Google Play Store</a>
@@ -567,54 +602,63 @@
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 [குரோம் லூப் பிக்ஸ்]: பிளேஸ்பாட் ரீஜனல் டொமைன் சிக்கலைத் தவிர்க்க உங்க அசல் பேக்கேஜ் நேம் வச்சு இன்டென்ட் பில்ட் பண்றோம் மச்சி!
+                // 👑 [ப்ளே ஸ்டோர் பிசாசு ஒழிப்பு லாக்]: 
+                // S.browser_fallback_url-ல் ப்ளே ஸ்டோர்க்கு பதிலா உங்க லேண்டிங் பேஜ்ஜையே பேக்அப்பா கொடுத்தாச்சு மச்சி!
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
-                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
+                                encodeURIComponent(window.location.href) + ";end";
                 
-                // 👑 [ஆட்டோ-ரீஃப்ரெஷ் லூப் முடக்கும் அசல் வித்தை]:
-                // குரோம் ஆட்டோமேட்டிக்கா பிளாக் பண்ணுனா பேஜ் லூப் ஆகாம இருக்க 'S.browser_fallback_url' தூக்கியாச்சு மாமே!
-                // இதனால பேஜ் ரீலோடு ஆகாம அப்படியே நிக்கும், ஸ்மார்ட் பேனரும் ஓபன் ஆகும்!
                 var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
+                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
                 
                 if (isChrome) {
-                    // குரோமாக இருந்தால் டாப்ல ஸ்மார்ட் பேனரை கச்சிதமா ஓபன் பண்றோம்!
-                    var banner = document.getElementById("chromeAppBanner");
-                    var header = document.getElementById("appHeader");
-                    if (banner && header) {
-                        banner.style.display = "flex";
-                        header.style.style = "margin-top: 60px;"; // பேனருக்காக ஹெடரை கொஞ்சம் கீழே இறக்குறோம்
-                    }
+                    var hasApp = false;
                     
-                    // பேக்ரவுண்ட்ல ஒருமுறை ஆப்பைத் தூண்ட ட்ரை பண்ணுவோம்
+                    // பேக்ரவுண்ட்ல ஆப்பைத் தூண்ட ட்ரை பண்ணுறோம்
                     var iframe = document.createElement("iframe");
-                    iframe.style.border = "none";
-                    iframe.style.width = "1px";
-                    iframe.style.height = "1px";
                     iframe.style.display = "none";
                     iframe.src = intentUrl;
                     document.body.appendChild(iframe);
+
+                    window.onblur = function() {
+                        hasApp = true;
+                        localStorage.setItem("zivon_app_user", "true");
+                    };
+
+                    // 👑 [பக்கா பினிஷ்ட் கண்டிஷன்]: ஆப் இருக்கறவனுக்கு மட்டும் சடனா கார்டு பாப்-அப் ஆகும்!
+                    // ஆப் இல்லாத புது யூசருக்கு ப்ளே ஸ்டோர் ஓபன் ஆகாமல், அப்படியே லேண்டிங் பேஜ் நிக்கும் மாமே!
+                    setTimeout(function() {
+                        if (hasApp || document.hidden || screenTop < 0 || isAppUser) {
+                            var overlay = document.getElementById("zivonAppOverlay");
+                            if (overlay) {
+                                overlay.style.display = "flex"; 
+                            }
+                        }
+                    }, 300);
                     
-                    // பேனர்ல இருக்குற OPEN IN APP பட்டனை கிளிக் பண்ணா 100% சல்லுன்னு ஆப்புக்குள்ள போகும் மாமே!
                     var bannerBtn = document.getElementById("btnBannerOpen");
                     if (bannerBtn) {
                         bannerBtn.onclick = function() {
+                            localStorage.setItem("zivon_app_user", "true");
                             window.location.href = intentUrl;
                         };
                     }
-                } else {
-                    // மத்த நார்மல் பிரவுசர்களுக்கு வழக்கம் போல நேரடியா ரீடைரக்ட் அடிக்கும்!
-                    window.location.replace(intentUrl);
                 }
             }
 
-            // டவுன்லோட் பட்டன்களுக்கான லிங்க் செட்டப்ஸ்
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
+                apkBtn.onclick = function() {
+                    localStorage.setItem("zivon_app_user", "true");
+                };
             }
             var playBtn = document.getElementById("btnPlay");
             if (playBtn) {
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.sudasudaupdates.zivon";
+                playBtn.onclick = function() {
+                    localStorage.setItem("zivon_app_user", "true");
+                };
             }
         };
     </script>
