@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zivon App - Download</title>
-
-    <meta property="og:title" content="Zivon அதிகாரப்பூர்வ ஆப்!" />
-    <meta property="og:description" content="நாவல்கள் மற்றும் செய்திகளை உடனுக்குடன் தங்குதடையின்றி படிக்க ஆப்பை இப்போதே டவுன்லோட் செய்யுங்கள்." />
-    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" />
-    <meta property="og:url" content="https://ssutamil.github.io/zivonapp/zivon-home.html" />
-    <meta property="og:type" content="website" />
-
+    <title>Zivon - Zivon Novels & Info App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* 👑 பிரீமியம் மாடர்ன் டார்க் தீம் செட்டப் */
+        :root {
+            --bg-color: #101419;
+            --card-bg: #161B21;
+            --primary-color: #007bff;
+            --accent-color: #03806a;
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --btn-gradient: linear-gradient(135deg, #007bff 0%, #03806a 100%);
+        }
+
         /* ப்ளாக்கர் மெயின் கன்டென்ட் பாக்ஸை உடைக்க */
         .post-body, .entry-content, .article-content, #main, .main {
             width: 100% !important;
@@ -20,360 +28,555 @@
             padding: 0 !important;
         }
 
-        /* 💕 முழு ஸ்கிரீனுக்கான சுயாதீன அடுக்கு */
-        .zivon-page-overlay {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            background-color: #f8f9fa !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            z-index: 99999999 !important;
-            padding: 15px !important;
-            box-sizing: border-box !important;
-            overflow-y: auto !important;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Mukta Malar', sans-serif;
+            scroll-behavior: smooth;
         }
 
-        .zivon-page-overlay * {
-            font-family: 'Ubuntu', sans-serif !important;
-            box-sizing: border-box !important;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            width: 100%;
         }
 
-        /* 👑 ஆட்டோமேட்டிக் ஸ்கேலிங் கன்டைனர் வித்தை */
-        .landing-container {
-            background: #ffffff !important;
-            max-width: 440px !important;
-            width: 100% !important;
-            border-radius: 24px !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
-            border: 1px solid #eaeaea !important;
-            text-align: center !important;
-            padding: 30px 20px !important;
-            margin: auto !important;
-            transition: all 0.3s ease-in-out !important;
+        /* 👑 [ZIVON இன்ஸ்டன்த பாப்-அப் வித்தை] */
+        .app-popup-overlay {
+            display: none; /* ஜாவாஸ்கிரிப்ட் மூலம் தேவைப்படும் போது மட்டும் காண்பிக்கப்படும் */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(16, 20, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* 🖼️ தம்ப்நெயில் இமேஜ் மேனேஜ்மென்ட் */
-        .thumbnail-img {
-            max-width: 130px !important;
-            width: 100% !important;
-            height: auto !important;
-            border-radius: 20px !important;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.06) !important;
-            margin-bottom: 5px !important;
+        .popup-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            animation: zoomIn 0.3s ease-out;
         }
 
-        .brand-logo {
-            font-size: 32px !important;
-            font-weight: 700 !important;
-            color: #007bff !important;
-            letter-spacing: 1px !important;
-            margin-bottom: 5px !important;
-            text-transform: uppercase !important;
-        }
-        
-        .brand-logo span {
-            color: #ff3333 !important;
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .tagline {
-            font-size: 14px !important;
-            color: #666666 !important;
-            margin-bottom: 25px !important;
-            font-weight: 500 !important;
+        .popup-card img {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
 
-        .intro-card {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e1efff 100%) !important;
-            border-radius: 16px !important;
-            padding: 20px 15px !important;
-            margin-bottom: 25px !important;
-            border: 1px solid #d2e6ff !important;
+        .popup-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
         }
 
-        .intro-title {
-            font-size: 18px !important;
-            font-weight: 700 !important;
-            color: #0056b3 !important;
-            margin-bottom: 10px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px !important;
+        .popup-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
         }
 
-        .intro-title svg {
-            width: 20px;
-            height: 20px;
-            fill: #0056b3;
+        /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்] */
+        .banner-btn {
+            background: var(--btn-gradient);
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 25px;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            animation: heartBeat 1.2s infinite; 
+            display: inline-block;
+            width: 100%;
         }
 
-        .intro-desc {
-            font-size: 14px !important;
-            color: #444444 !important;
-            line-height: 1.6 !important;
-            text-align: left !important;
+        @keyframes heartBeat {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            14% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            28% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+            42% { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid #222b35;
+            position: sticky;
+            top: 0;
+            background-color: rgba(16, 20, 25, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%; 
+        }
+
+        .brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            object-fit: cover;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--btn-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero {
+            padding: 80px 0 60px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            min-height: calc(100vh - 91px);
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        .hero-text h2 {
+            font-size: 42px;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .hero-text h2 span {
+            color: var(--accent-color);
+        }
+
+        .hero-text p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--btn-gradient);
+            color: var(--text-main);
+            box-shadow: 0 4px 20px rgba(3, 128, 106, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 2px solid #222b35;
+        }
+
+        .btn-secondary:hover {
+            background-color: #222b35;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            max-width: 100%;
+            border: 10px solid #222b35;
+            border-radius: 36px;
+            background-color: #000;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 140px;
+            height: 25px;
+            background-color: #222b35;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+
+        .phone-screen-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #161b21 0%, #101419 100%);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .phone-screen-content img {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            animation: floatAnim 3s ease-in-out infinite;
+        }
+
+        .phone-screen-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .phone-screen-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         .features-section {
-            text-align: left !important;
-            margin-bottom: 30px !important;
+            padding: 80px 0;
+            background-color: var(--card-bg);
+            border-top: 1px solid #222b35;
+            width: 100%;
         }
 
         .section-title {
-            font-size: 16px !important;
-            font-weight: 700 !important;
-            color: #222222 !important;
-            margin-bottom: 15px !important;
-            border-left: 4px solid #007bff !important;
-            padding-left: 10px !important;
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .feature-item {
-            display: flex !important;
-            align-items: flex-start !important;
-            margin-bottom: 15px !important;
+        .section-title h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); 
+            gap: 30px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background-color: var(--bg-color);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid #222b35;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .feature-icon {
-            background: #e1efff !important;
-            width: 36px !important;
-            height: 36px !important;
-            border-radius: 10px !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            margin-right: 12px !important;
-            flex-shrink: 0 !important;
+            font-size: 35px;
+            margin-bottom: 20px;
+            display: inline-block;
         }
 
-        .feature-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: #007bff;
+        .feature-card h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-main);
         }
 
-        .feature-text h4 {
-            font-size: 15px !important;
-            font-weight: 700 !important;
-            color: #333333 !important;
-            margin-bottom: 2px !important;
-            text-align: left !important;
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .feature-text p {
-            font-size: 13px !important;
-            color: #666666 !important;
-            line-height: 1.4 !important;
-            text-align: left !important;
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #222b35;
+            font-size: 14px;
+            color: var(--text-muted);
+            width: 100%;
         }
 
-        .btn-container {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 12px !important;
-            margin-bottom: 15px !important;
-        }
-
-        .download-btn {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
-            padding: 16px 25px !important;
-            border-radius: 50px !important;
-            font-size: 16px !important;
-            font-weight: 700 !important;
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.25) !important;
-            transition: transform 0.2s !important;
-        }
-
-        .download-btn:active {
-            transform: scale(0.98) !important;
-        }
-
-        .download-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #ffffff;
-            margin-right: 12px;
-        }
-
-        .playstore-btn {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            background: #eef0f2 !important;
-            color: #777777 !important;
-            text-decoration: none !important;
-            padding: 16px 25px !important;
-            border-radius: 50px !important;
-            font-size: 15px !important;
-            font-weight: 700 !important;
-            border: 2px dashed #cccccc !important;
-            cursor: not-allowed !important;
-            pointer-events: none !important;
-        }
-
-        .playstore-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #aaaaaa;
-            margin-right: 12px;
-        }
-
-        .file-info {
-            font-size: 12px !important;
-            color: #888888 !important;
-            font-weight: 500 !important;
-        }
-
-        /* 👑 [அக்மார்க் ஒரிஜினல் பிராண்டிங் லாக்] */
-        .glass-panel {
-            margin-top: 25px !important;
-            font-size: 11px !important;
-            color: #aaaaaa !important;
-            border-top: 1px solid #eeeeee !important;
-            padding-top: 15px !important;
-            text-align: center !important;
-        }
-
-        @media only screen and (min-width: 600px) {
-            .landing-container {
-                max-width: 500px !important;
-                padding: 40px 30px !important;
-                border: 1px solid #dcdcdc !important;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12) !important;
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 0;
+                min-height: auto;
             }
-            .brand-logo { font-size: 36px !important; }
-            .thumbnail-img { max-width: 140px !important; }
+            .hero-text {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 8px; }
+            header { padding: 15px 0; }
+            .brand { justify-content: space-between; gap: 0; }
+            .brand h1 { font-size: 19px; text-align: right; }
+            .brand img { width: 42px; height: 42px; }
+            .hero-text { align-items: center; text-align: center; width: 100%; }
+            .hero-text h2 { font-size: 30px; line-height: 1.4; margin-bottom: 22px; width: 100%; }
+            .hero-text p { font-size: 17px; line-height: 1.6; margin-bottom: 35px; color: #e2e8f0; width: 100%; }
+            .btn { width: 100%; padding: 15px 20px; font-size: 16px; }
+            .cta-buttons { gap: 14px; padding: 0; justify-content: center; }
+            .phone-mockup { width: 250px; height: 500px; margin-top: 35px; }
+            .section-title h3 { font-size: 26px; }
+            .feature-card { padding: 20px 16px; text-align: center; }
+            .feature-card h4 { font-size: 21px; margin-bottom: 10px; }
+            .feature-card p { font-size: 16px; line-height: 1.6; color: #cbd5e1; }
         }
     </style>
 </head>
 <body>
 
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&amp;display=swap" rel="stylesheet"></link>
-
-<div class="zivon-page-overlay" id="pageOverlay">
-    <div class="landing-container">
-        <div class="separator" style="clear: both; text-align: center;">
-            <img class="thumbnail-img" border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon Thumbnail" />
+    <div id="zivonAppOverlay" class="app-popup-overlay">
+        <div class="popup-card">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
+            <h3>Zivon Novels & Info</h3>
+            <p>SUDA SUDA UPDATES</p>
+            <button id="btnBannerOpen" class="banner-btn">💓 OPEN IN APP 💓</button>
         </div>
-        
-        <div class="brand-logo">ZIV<span>O</span>N</div>
-        <div class="tagline">உண்மையான செய்திகளின் உறைவிடம்</div>
-
-        <div class="intro-card">
-            <div class="intro-title">
-                <svg viewbox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-5 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5-5H7V4h10v13z"></path></svg>
-                Zivon அதிகாரப்பூர்வ ஆப்!
-            </div>
-            <div class="intro-desc">வணக்கம் நண்பர்களே.! நமது <b>Zivon</b> தளத்தின் செய்திகளை பிரவுசரில் தேடிப் படிப்பதை விட, இன்னும் எளிமையாகவும் வேகமாகவும் படிப்பதற்காக இந்த ஆண்ட்ராய்டு ஆப் பிரத்யேகமாக உருவாக்கப்பட்டுள்ளது. உங்கள் மொபைலில் தங்குதடையின்றி செய்திகளை வாசிக்க இப்போதே அதிகாரப்பூர்வ APK-வை டவுன்லோட் செய்யுங்கள்.</div>
-        </div>
-
-        <div class="features-section">
-            <div class="section-title">ஆப்-னில் என்னென்ன படிக்கலாம்?</div>
-            
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <svg viewbox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"></path></svg>
-                </div>
-                <div class="feature-text">
-                    <h4>உடனுக்குடன் நேரடி செய்திகள்</h4>
-                    <p>தமிழகம் மற்றும் சர்வதேச அளவில் நடக்கும் முக்கிய நிகழ்வுகள் துல்லியமாக உங்கள் கைகளில்.</p>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <svg viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
-                </div>
-                <div class="feature-text">
-                    <h4>ஆரோக்கியம் &amp; ஹெல்த் டிப்ஸ்</h4>
-                    <p>உடல் நலம், இயற்கை மருத்துவம் மற்றும் அன்றாட வாழ்வியலுக்கான பயனுள்ள ஆரோக்கிய குறிப்புகள்.</p>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <svg viewbox="0 0 24 24"><path d="M21 5c-1.11-.64-2.58-1-4-1-2.52 0-5.3 1.28-7 2.52C8.3 5.28 5.52 4 3 4c-1.42 0-2.89.36-4 1v14c1.11-.7 2.58-1 4-1 2.52 0 5.3 1.28 7 2.52 1.7-1.24 4.48-2.52 7-2.52 1.42 0 2.89.3 4 1V5zm-2 12c-1.17-.52-2.61-.7-4-.7-2.3 0-4.63.97-6 1.75V7.5c1.37-.78 3.7-1.75 6-1.75 1.39 0 2.83.18 4 .7v10.5z"></path></svg>
-                </div>
-                <div class="feature-text">
-                    <h4>எளிய முறையில் வாசிப்பு எக்ஸ்பீரியன்ஸ்</h4>
-                    <p>விளம்பரம் மற்றும் எரிச்சலூட்டும் பாப்-அப்கள் இல்லாமல் செய்திகளை நிம்மதியாகப் படிக்கலாம்.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="btn-container">
-            <a class="download-btn" href="https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" id="downloadBtn">
-                <svg viewbox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"></path></svg>
-                Download Zivon APK
-            </a>
-            
-            <div class="playstore-btn">
-                <svg viewbox="0 0 24 24"><path d="M3.609 1.814L13.783 12 3.609 22.186c-.183-.163-.306-.4-.306-.688V2.502c0-.288.123-.525.306-.688zM14.494 12.71l2.453 2.453-11.45 6.495c-.212.12-.454.08-.62-.054L14.494 12.71zm4.184-1.258c.456.258.456.68 0 .939l-2.12 1.203-2.483-2.483 2.483-2.483 2.12 1.204zm-4.184-1.452l-9.167-5.204c.166-.134.408-.174.62-.054l11.45 6.495-2.453 2.453H14.494z"></path></svg>
-                Google Play Store (Coming Soon)
-            </div>
-        </div>
-        
-        <div class="file-info">Version: 1.0.0 | Size: ~9.0 MB | Android 5.0+</div>
-        <div class="glass-panel">100% Safe &amp; Secure | SUDA SUDA UPDATES அதிகாரப்பூர்வ பாதுகாப்பு தளம்.</div>
     </div>
-</div>
 
-<script>
-    window.onload = function() {
-        var userAgent = navigator.userAgent.toLowerCase();
-        var isInsideApp = userAgent.includes("wv") || userAgent.includes("webview") || (userAgent.includes("android") && !userAgent.includes("chrome") && !userAgent.includes("firefox"));
-        
-        var urlParams = new URLSearchParams(window.location.search);
-        var postParam = urlParams.get('id') || urlParams.get('post');
+    <header id="appHeader">
+        <div class="container nav-wrapper">
+            <div class="brand">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon Logo">
+                <h1>Zivon Novels & Info</h1>
+            </div>
+        </div>
+    </header>
 
-        if (isInsideApp) {
-            if (postParam && postParam !== "/") {
-                document.getElementById("pageOverlay").style.display = "none";
-                window.location.replace("https://zivonnovels.blogspot.com" + decodeURIComponent(postParam));
+    <section class="container hero">
+        <div class="hero-text">
+            <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
+            <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்காகவே பிரத்யேகமாகவடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
+                <a href="#" class="btn btn-secondary" id="btnPlay">🤖 Google Play Store</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="phone-mockup">
+                <div class="phone-screen-content">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon Inside App">
+                    <h3>Zivon Novels & Info</h3>
+                    <p>Next Generation Reading Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h3>ஏன் இணையதளத்தை விட Zivon ஆப் சிறந்தது?</h3>
+                <p>வாசகர்களின் வாசிப்பு அனுபவத்தை அடுத்த கட்டத்திற்கு கொண்டு செல்ல ஆப்பில் உள்ள சில பிரத்தியேக அம்சங்கள்!</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h4>அதிவேக லோடிங் (Zero Delay)</h4>
+                    <p>பிரவுசர்களில் தட்டச்சு செய்து பக்கம் லோட் ஆகும் வரை காத்திருக்க தேவையில்லை. ஆப்பை கிளிக் செய்த அடுத்த மைக்ரோ செகண்டில் கதைகள் உங்கள் கண்முன்னே தோன்றும்.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📵</div>
+                    <h4>எரிச்சலூட்டும் விளம்பரங்கள் இல்லை</h4>
+                    <p>வலைத்தளங்களில் பாப்-அப் ஆகி உங்கள் வாசிப்பு கவனத்தை சிதறடிக்கும் தேவையில்லாத மூன்றாம் தர விளம்பரங்கள் ஆப்பில் முற்றிலும் தடா செய்யப்பட்டுள்ளன.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h4>உடனடி அத்தியாய அறிவிப்புகள்</h4>
+                    <p>உங்களுக்கு பிடித்த நாவலின் புதிய அத்தியாயங்கள் பதிவேற்றப்பட்ட அடுத்த கணமே புஷ் நோட்டிபிகேஷன் மூலம் உங்கள் மொபைல் ஸ்கிரீனுக்கே அலர்ட் வந்துவிடும்.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>அச்சு அசலான வாசிப்பு சுகம்</h4>
+                    <p>பிரவுசரின் தேவையில்லாத மெனுக்கள் இன்றி, உங்களுக்கு வசதியான எழுத்து அளவு (Font Slider), டார்க் மோட் போன்ற அதிநவீன கஸ்டமைஸ் வசதிகளுடன் சொகுசாக படிக்கலாம்.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SUDA SUDA UPDATES. All Rights Reserved. Designed for Zivon Novels & Info.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            // 1. வெப்வியூ அல்லது ஆப்புக்குள்ள இருக்காங்களானு செக் பண்றோம்
+            var isInsideApp = userAgent.includes("wv") || userAgent.includes("webview") || (userAgent.includes("android") && !userAgent.includes("chrome") && !userAgent.includes("firefox"));
+            
+            var urlParams = new URLSearchParams(window.location.search);
+            var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
+
+            var cleanPath = idParam ? decodeURIComponent(idParam) : "";
+            if (cleanPath !== "" && !cleanPath.startsWith("/")) { cleanPath = "/" + cleanPath; }
+
+            // கண்டிஷன் 1: ஆப்புக்குள்ள ஆல்ரெடி இருந்தா லேண்டிங் பேஜை மறைச்சிட்டு நேரா ப்ளாக்கர் போஸ்டுக்கு கூட்டிட்டு போயிடு!
+            if (isInsideApp) {
+                if (cleanPath && cleanPath !== "/") {
+                    window.location.replace("https://zivonnovels.blogspot.com" + cleanPath);
+                }
+                return;
             }
-            return;
-        }
 
-        if (!isInsideApp) {
-            var cleanPost = postParam ? postParam : "";
-            var decodedPost = decodeURIComponent(cleanPost);
-            
-            // 👑 [அக்மார்க் ஆண்ட்ராய்டு ஆப் லிங்க்ஸ் ஜோடி வித்தை!]:
-            // 1. நம்ம புதிய மேனிஃபெஸ்ட்ல 'zivonnovels.blogspot.com' அசல் டொமைனை லாக் பண்ணியாச்சு.
-            // 2. அதனால இங்க இன்டென்ட் யூஆர்எல்-ஐ நேரடியா "intent://zivonnovels.blogspot.com" பாதையிலேயே அமைச்சாச்சு!
-            // 3. இதோட 'scheme=https' மற்றும் புதிய பேக்கேஜ் பேரான 'package=com.sudasudaupdates.zivon' அச்சு அசல் 100% கறாரா லாக் ஆகியிருக்கு!
-            // 4. குரோம் மூலமா ஆப் ஓப்பன் ஆன அடுத்த செகண்ட், ஜாவா கோடுல இருக்குற 'data.getPath()' அந்த அசல் போஸ்ட் பாதையை ஏமாறாம கச்சிதமா பிரிச்சு எடுத்து லோடு பண்ணிடும்டா!
-            var nativeIntentUrl = "intent://zivonnovels.blogspot.com" + decodedPost + 
-                                  "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
-                                  encodeURIComponent("https://zivonnovels.blogspot.com" + decodedPost) + ";end";
-            
-            window.location.replace(nativeIntentUrl);
-            
-            setTimeout(function() {
-                window.close();
-            }, 100);
-        }
+            // 👑 100% துல்லியமான புது பேக்கேஜ் லிங்க் (1st கோடோட அசல் லாஜிக் ரெஃபரன்ஸ்)
+            var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
+                            "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
+                            encodeURIComponent(window.location.href) + ";end";
 
-        var downloadBtn = document.getElementById("downloadBtn");
-        if (downloadBtn) {
-            if (postParam && postParam !== "/") {
-                downloadBtn.onclick = function(e) {
-                    e.preventDefault();
-                    window.location.href = "https://zivonnovels.blogspot.com" + postParam;
+            // கண்டிஷன் 2: நார்மல் பிரவுசர்ல வெளியே இருக்கும் போது...
+            if (!isInsideApp) {
+                // பக் ஃபிக்ஸ்: iframe வித்தையை தூக்கிட்டு 1st கோடு மாதிரி ஸ்ட்ரெயிட்டா window.location.replace வழியா ஆப்பை ஓபன் பண்ண ட்ரை பண்றோம்!
+                window.location.replace(intentUrl);
+
+                // ஆப் ஓபன் ஆகலனா (அதாவது யூசர் இன்னும் லேண்டிங் பேஜ்லயே இருந்தா) 1.5 செகண்ட் கழிச்சு பாப்-அப் ஓவர்லேயை காட்டுறோம்
+                setTimeout(function() {
+                    // எக்ஸ்ட்ரா கண்டிஷன்: யூசர் ஏற்கனவே "Direct APK" அல்லது "Play Store" கிளிக் பண்ணி ஆப் யூசரா மாறியிருந்தா மட்டும் உடனே காட்டுறோம்
+                    var isAppUser = localStorage.getItem("zivon_app_user") === "true";
+                    
+                    // ஒருவேளை யூசர் புது ஆளா இருந்தாலும், அவங்களுக்கு ஆப்பை ஓபன் பண்ண புஷ் குடுக்க இந்த பாப்-அப் ஓவர்லேயை எனேபிள் பண்றோம்!
+                    if (idParam !== "") {
+                        var overlay = document.getElementById("zivonAppOverlay");
+                        if (overlay) { overlay.style.display = "flex"; }
+                    }
+                }, 1500);
+            }
+
+            // பாப்-அப் கார்டில் உள்ள "OPEN IN APP" மேஜிக் பட்டன் கிளிக் லாஜிக்
+            var bannerBtn = document.getElementById("btnBannerOpen");
+            if (bannerBtn) {
+                bannerBtn.onclick = function() {
+                    localStorage.setItem("zivon_app_user", "true");
+                    window.location.href = intentUrl;
                 };
             }
-        }
-    };
-</script>
 
+            // Direct APK Download பட்டன் லிங்க் செட்டிங்ஸ்
+            var apkBtn = document.getElementById("btnApk");
+            if (apkBtn) {
+                apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
+                apkBtn.onclick = function() {
+                    localStorage.setItem("zivon_app_user", "true");
+                };
+            }
+
+            // Google Play Store பட்டன் லிங்க் புது பேக்கேஜோடு மாத்தியாச்சு மாமே!
+            var playBtn = document.getElementById("btnPlay");
+            if (playBtn) {
+                playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
+                playBtn.onclick = function() {
+                    localStorage.setItem("zivon_app_user", "true");
+                };
+            }
+        });
+    </script>
 </body>
 </html>
