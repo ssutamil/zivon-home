@@ -34,6 +34,66 @@
             width: 100%;
         }
 
+        /* 👑 [குரோம் பிக்ஸ் ஸ்பெஷல்]: ஸ்மார்ட் பேனர் டிசைன் வித்தை மாமே */
+        .app-banner {
+            display: none;
+            background: linear-gradient(90deg, #161b21 0%, #101419 100%);
+            border-bottom: 2px solid var(--primary-color);
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .banner-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .banner-info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .banner-info p {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .banner-info span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .banner-btn {
+            background: var(--btn-gradient);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+
         /* 👑 கச்சிதமான ரெஸ்பான்சிவ் கன்டெய்னர் வித்தை */
         .container {
             width: 100%;
@@ -419,7 +479,18 @@
 </head>
 <body>
 
-    <header>
+    <div id="chromeAppBanner" class="app-banner">
+        <div class="banner-info">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="App Icon">
+            <div>
+                <p>Zivon Novels & Info</p>
+                <span>SUDA SUDA UPDATES</span>
+            </div>
+        </div>
+        <button id="btnBannerOpen" class="banner-btn">OPEN IN APP</button>
+    </div>
+
+    <header id="appHeader">
         <div class="container nav-wrapper">
             <div class="brand">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon Logo">
@@ -431,7 +502,7 @@
     <section class="container hero">
         <div class="hero-text">
             <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
-            <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
+            <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ 이ன்றி உங்களுக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
             <div class="cta-buttons">
                 <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
                 <a href="#" class="btn btn-secondary" id="btnPlay">🤖 Google Play Store</a>
@@ -490,23 +561,53 @@
             var urlParams = new URLSearchParams(window.location.search);
             var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
 
-            // 👑 [0 செகண்ட் அசுர வேக அக்மார்க் ரீடைரக்ட் வித்தை மாமே!]:
-            // லிங்க்ல 'id' பேராமீட்டர் இருந்தா, பிரவுசர்ல லேண்டிங் பேஜ் தெரியுறதுக்கு முன்னாடியே ஆப்பை லான்ச் பண்ணத் தூண்டும்!
             if (idParam !== "") {
                 var cleanPath = decodeURIComponent(idParam);
                 if (!cleanPath.startsWith("/")) {
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 ஆண்ட்ராய்டு சிஸ்டமை ஸ்ட்ரெயிட்டா அலர்ட் பண்ற அசல் டீப் லிங்கிங் இன்டென்ட் ஃபார்மேட் மச்சி!
-                var intentUrl = "intent://" + window.location.host + window.location.pathname + window.location.search +
-                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
-                                encodeURIComponent(window.location.href) + ";end";
+                // 👑 [குரோம் லூப் பிக்ஸ்]: பிளேஸ்பாட் ரீஜனல் டொமைன் சிக்கலைத் தவிர்க்க உங்க அசல் பேக்கேஜ் நேம் வச்சு இன்டென்ட் பில்ட் பண்றோம் மச்சி!
+                var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
+                                "#Intent;scheme=https;package=com.sudasudaupdates.zivon;end";
                 
-                window.location.replace(intentUrl);
+                // 👑 [ஆட்டோ-ரீஃப்ரெஷ் லூப் முடக்கும் அசல் வித்தை]:
+                // குரோம் ஆட்டோமேட்டிக்கா பிளாக் பண்ணுனா பேஜ் லூப் ஆகாம இருக்க 'S.browser_fallback_url' தூக்கியாச்சு மாமே!
+                // இதனால பேஜ் ரீலோடு ஆகாம அப்படியே நிக்கும், ஸ்மார்ட் பேனரும் ஓபன் ஆகும்!
+                var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
+                
+                if (isChrome) {
+                    // குரோமாக இருந்தால் டாப்ல ஸ்மார்ட் பேனரை கச்சிதமா ஓபன் பண்றோம்!
+                    var banner = document.getElementById("chromeAppBanner");
+                    var header = document.getElementById("appHeader");
+                    if (banner && header) {
+                        banner.style.display = "flex";
+                        header.style.style = "margin-top: 60px;"; // பேனருக்காக ஹெடரை கொஞ்சம் கீழே இறக்குறோம்
+                    }
+                    
+                    // பேக்ரவுண்ட்ல ஒருமுறை ஆப்பைத் தூண்ட ட்ரை பண்ணுவோம்
+                    var iframe = document.createElement("iframe");
+                    iframe.style.border = "none";
+                    iframe.style.width = "1px";
+                    iframe.style.height = "1px";
+                    iframe.style.display = "none";
+                    iframe.src = intentUrl;
+                    document.body.appendChild(iframe);
+                    
+                    // பேனர்ல இருக்குற OPEN IN APP பட்டனை கிளிக் பண்ணா 100% சல்லுன்னு ஆப்புக்குள்ள போகும் மாமே!
+                    var bannerBtn = document.getElementById("btnBannerOpen");
+                    if (bannerBtn) {
+                        bannerBtn.onclick = function() {
+                            window.location.href = intentUrl;
+                        };
+                    }
+                } else {
+                    // மத்த நார்மல் பிரவுசர்களுக்கு வழக்கம் போல நேரடியா ரீடைரக்ட் அடிக்கும்!
+                    window.location.replace(intentUrl);
+                }
             }
 
-            // டவுன்லோட் பட்டன்களுக்கான லிங்க் செட்டிங்ஸ் வழக்கம் போல ஒர்க் ஆகும்
+            // டவுன்லோட் பட்டன்களுக்கான லிங்க் செட்டப்ஸ்
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
