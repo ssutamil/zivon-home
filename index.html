@@ -34,7 +34,7 @@
     </script>
 
     <style>
-        /* 👑 பிரೀமியம் மாடர்ன் டார்க் தீம் செட்டப் */
+        /* 👑 பிரீமியம் மாடர்ன் டார்க் தீம் செட்டப் */
         :root {
             --bg-color: #101419;
             --card-bg: #161B21;
@@ -130,6 +130,37 @@
             width: 100%;
         }
 
+        /* 👑 [ஹெட்டிங்குக்கு மேலே வரும் புதிய சென்டர் ஓபன் பட்டன் ஸ்டைல்] */
+        .inline-open-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .btn-inline-open {
+            background: var(--btn-gradient);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-inline-open:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 123, 255, 0.6);
+        }
+
         /* 👑 [டவுன்லோட் பட்டனுக்கான ஹார்ட் பீட் அனிமேஷன்] */
         .pulse-animation {
             animation: heartBeat 1.2s infinite !important;
@@ -162,7 +193,7 @@
 
         .nav-wrapper {
             display: flex;
-            justify-open: space-between;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -525,6 +556,11 @@
 
     <section class="container hero">
         <div class="hero-text">
+            <!-- 👑 ["இணைய உலாவி" டெக்ஸ்டுக்கு மேலே சென்டராக கொண்டு வரப்பட்ட புது பட்டன்] -->
+            <div class="inline-open-container">
+                <button id="btnCenterOpen" class="btn-inline-open">💓 OPEN IN APP 💓</button>
+            </div>
+            
             <h2>இணைய உலாவி (Browser) தேவையில்லை! <span>Zivon Novels & Info ஆப்</span> வழியே நேரடியாக கதை மற்றும் தகவல் உலகிற்குள் நுழையுங்கள்!</h2>
             <p>வலைத்தளங்களில் கதை மற்றும் தகவல்களைத் தேடி அலைந்த காலம் முடிந்தது. விளம்பர தொல்லைகளோ, பக்கங்கள் லோட் ஆகும் தாமதமோ இன்றி உங்களுக்குக்காகவே பிரத்யேகமாக வடிவமைக்கப்பட்ட அசுர வேக Zivon செயலியை இப்போதே தரவிறக்கம் செய்யுங்கள்!</p>
             <div class="cta-buttons">
@@ -637,11 +673,37 @@
                     }
                 }
 
-                // ஒருவேளை மேனுவலா கிளிக் பண்ணா மட்டும் ஆப் லிங்க் வேலை செய்யும்
+                // 👑 [புதிய சென்டர் பட்டன் க்ளிக் லாஜிக்]
+                var centerOpenBtn = document.getElementById("btnCenterOpen");
+                if (centerOpenBtn) {
+                    centerOpenBtn.onclick = function() {
+                        if (!isFallback) {
+                            // ஆப் இருந்தா ஓபன் பண்ண ட்ரை பண்ணும் (சில பிரவுசர்கள் யூசர் கிளிக் பண்ணா தான் இத விடுவானுங்க)
+                            window.location.href = intentUrl;
+                        } else {
+                            // ஆப் இல்லாத யூசரா இருந்தா, ஸ்மூத்தா டவுன்லோட் பட்டன் ஏரியாவுக்கு தள்ளிவிடும்!
+                            if (apkBtn) {
+                                apkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                apkBtn.classList.add("pulse-animation"); // கன்பார்மா துடிக்க வைக்கும்!
+                            }
+                        }
+                    };
+                }
+
+                // ஒருவேளை ஓவர்லே பாப்-அப் பட்டனை கிளிக் பண்ணா மட்டும் ஆப் லிங்க் வேலை செய்யும்
                 var bannerBtn = document.getElementById("btnBannerOpen");
                 if (bannerBtn) {
                     bannerBtn.onclick = function() {
                         window.location.href = intentUrl;
+                    };
+                }
+            } else {
+                // ஐடி பேராமீட்டர் இல்லாம சும்மா பேஜ் ஓபன் பண்ணா சென்டர் பட்டன் டவுன்லோடுக்கு கூட்டிட்டு போகும்
+                var centerOpenBtn = document.getElementById("btnCenterOpen");
+                if (centerOpenBtn && apkBtn) {
+                    centerOpenBtn.onclick = function() {
+                        apkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        apkBtn.classList.add("pulse-animation");
                     };
                 }
             }
