@@ -136,6 +136,7 @@
             border-radius: 30px;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: none;
             cursor: pointer;
             white-space: nowrap;
         }
@@ -462,7 +463,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">📵</div>
                     <h4>எரிச்சலூட்டும் விளம்பரங்கள் இல்லை</h4>
-                    <p>வலைத்தளங்களில் பாப்-அப் ஆகி உங்கள் வாசிப்பு கவனத்தை சிதறடிக்கும் தேவையில்லாத மூன்றாம் தர விளம்பரங்கள் ஆப்பில் முற்றிலும் தடுக்கப்பட்டுள்ளன.</p>
+                    <p>வலைத்தளங்களில் பாப்-அப் ஆகி உங்கள் வாசிப்பு கவனத்தை சிதறடிக்கும் தேவையில்லாத மூன்றாம் தர விளம்பரங்கள் ஆப்பில் முற்றிலும் தடா செய்யப்பட்டுள்ளன.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔔</div>
@@ -480,32 +481,39 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Nex Medyn. All Rights Reserved. Designed for Zivon Novels & Info.</p>
+            <p>&copy; 2026 SUDA SUDA UPDATES. All Rights Reserved. Designed for Zivon Novels & Info.</p>
         </div>
     </footer>
 
     <script>
         window.onload = function() {
             var urlParams = new URLSearchParams(window.location.search);
-            var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post');
+            var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
 
-            if (idParam) {
+            // 👑 [0 செகண்ட் அசுர வேக அக்மார்க் ரீடைரக்ட் வித்தை மாமே!]:
+            // லிங்க்ல 'id' பேராமீட்டர் இருந்தா, பிரவுசர்ல லேண்டிங் பேஜ் தெரியுறதுக்கு முன்னாடியே ஆப்பை லான்ச் பண்ணத் தூண்டும்!
+            if (idParam !== "") {
                 var cleanPath = decodeURIComponent(idParam);
+                if (!cleanPath.startsWith("/")) {
+                    cleanPath = "/" + cleanPath;
+                }
                 
-                // 👑 [ஆண்ட்ராய்டு அக்மார்க் இன்டென்ட் லாக்]: 
-                // ஆப் இன்ஸ்டால் ஆகியிருந்தா இந்த ஸ்கிரிப்ட் பிரவுசரை 0-செகண்ட்ல ஓவர்-டேக் பண்ணி ஸ்ட்ரெயிட்டா ஆப்புக்குள்ள தள்ளிவிடும்!
-                var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath + 
+                // 👑 ஆண்ட்ராய்டு சிஸ்டமை ஸ்ட்ரெயிட்டா அலர்ட் பண்ற அசல் டீப் லிங்கிங் இன்டென்ட் ஃபார்மேட் மச்சி!
+                var intentUrl = "intent://" + window.location.host + window.location.pathname + window.location.search +
                                 "#Intent;scheme=https;package=com.sudasudaupdates.zivon;S.browser_fallback_url=" + 
                                 encodeURIComponent(window.location.href) + ";end";
                 
-                // இன்ஸ்டன்ட் ரீ-டைரக்ட் ஃபயர் மச்சி!
                 window.location.replace(intentUrl);
+            }
 
-                // ஒருவேளை ஆப் டவுன்லோட் பட்டன்களை கிளிக் பண்ணா அந்த குறிப்பிட்ட லிங்க்கை ரீடைரக்ட் செய்ய பேக்அப் லாக்
-                var apkBtn = document.getElementById("btnApk");
-                if (apkBtn) {
-                    apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html?id=" + encodeURIComponent(cleanPath);
-                }
+            // டவுன்லோட் பட்டன்களுக்கான லிங்க் செட்டிங்ஸ் வழக்கம் போல ஒர்க் ஆகும்
+            var apkBtn = document.getElementById("btnApk");
+            if (apkBtn) {
+                apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
+            }
+            var playBtn = document.getElementById("btnPlay");
+            if (playBtn) {
+                playBtn.href = "https://play.google.com/store/apps/details?id=com.sudasudaupdates.zivon";
             }
         };
     </script>
