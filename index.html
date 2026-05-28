@@ -8,34 +8,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     
+    <!-- 👑 [0 செகண்ட் ஆல்-பிரவுசர் யுனிவர்சல் ரீடைரக்ட் மேஜிக் மாமே]: 
+         சாம்சங், ஓபரா, கிவி, டக்-டக்-கோ என எந்த பிரவுசராக இருந்தாலும் பேஜ் லோடாகும் முன்பே ஆப்பைத் தூண்டுகிறது! -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
             var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
-            var isLoopChecked = urlParams.get('fallback') === 'true'; // லூப் பக்கை உடைக்க செக் பாயிண்ட் மாமே!
-            
-            if (idParam !== "" && !isLoopChecked) {
+            var isFallback = urlParams.get('fallback') === 'true'; // லூப் ஆகாம தடுக்கிற பிரேக் சுவிட்ச்
+
+            if (idParam !== "" && !isFallback) {
                 var cleanPath = decodeURIComponent(idParam);
                 if (!cleanPath.startsWith("/")) {
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 [லூப் பக் ஒழிப்பு லாக் மச்சி]: 
-                // ஃபால்பேக் URL-ல அதே பேஜ் லிங்க் போகும்போது கடைசியில &fallback=true சேர்ந்துடும். இதனால பிரவுசர் லூப் ஆகாது!
+                // பிரவுசர் மாட்டிட்டுக் முழிக்காம இருக்க அக்யூரேட் ஃபால்பேக் URL
                 var currentCleanUrl = window.location.origin + window.location.pathname + "?path=" + encodeURIComponent(idParam);
                 var fallbackUrl = currentCleanUrl + "&fallback=true";
 
+                // யுனிவர்சல் ஆண்ட்ராய்டு இன்டென்ட் ஃபார்மட் மாமே!
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
                                 "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
                                 encodeURIComponent(fallbackUrl) + ";end";
                 
-                var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
-                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
-                
-                // ஆப் வச்சிருக்கற பழைய யூசரா இருந்தா 0 செகண்ட்ல ஸ்ட்ரெயிட்டா ஆப்புக்கு ஃபயர்!
-                if (isAppUser && !isChrome) {
-                    window.location.replace(intentUrl);
-                }
+                // 👑 [0 செகண்ட் அட்டாக்]: வந்த உடனே ஆப்புக்கு துரத்துறோம். ஆப் இருந்தா இங்கேயே கதை முடிந்தது, ஆப் ஓபன் ஆகிடும்!
+                window.location.replace(intentUrl);
             }
         })();
     </script>
@@ -67,7 +64,7 @@
             width: 100%;
         }
 
-        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே]: ஆப் வச்சிருக்கறவனுக்கு மட்டும் சென்டர்ல ஓபன் ஆகுற கார்டு */
+        /* 👑 [ZIVON இன்ஸ்டன்ட் பாப்-அப் வித்தை மாமே] */
         .app-popup-overlay {
             display: none;
             position: fixed;
@@ -95,7 +92,7 @@
             animation: zoomIn 0.3s ease-out;
         }
 
-        @pragma zoomIn {
+        @keyframes zoomIn {
             from { transform: scale(0.8); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
@@ -121,7 +118,7 @@
             margin-bottom: 24px;
         }
 
-        /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்]: லவ்ஸ் தட்டி தட்டக்னு துடிக்கிற அனிமேஷன் லாக் மாமே! */
+        /* 👑 [ஹார்ட் பீட் மேஜிக் பட்டன்] */
         .banner-btn {
             background: var(--btn-gradient);
             color: #fff;
@@ -147,7 +144,7 @@
             70% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); }
         }
 
-        /* 👑 கச்சிதமான ரெஸ்பான்சிவ் கன்டெய்னர் வித்தை */
+        /* 👑 கச்சிதமான ரெஸ்பான்சிவ் கன்டெய்너 வித்தை */
         .container {
             width: 100%;
             max-width: 1200px;
@@ -515,6 +512,7 @@
 </head>
 <body>
 
+    <!-- 👑 [ZIVON பிரீமியம் சென்டர் பாப்-அப் கார்டு] -->
     <div id="zivonAppOverlay" class="app-popup-overlay">
         <div class="popup-card">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6QrnOx776Cae8001ebnnenu4OLW4EDZdjndGPgSkcq3xp3SJemf0Au6EnhIceIv-3miEZ_nu_6avaQFnvLoX0cExLOoVMdmBE4UgeVV-JC7eaXJBvvFoVQD-PeOkasSwjrmc-i-LnPFGjf9hNfjLFXTR0uYLmeUZFuQsrDWsTkgHIKUGWSJySs-QOy5EN/s16000/1000342689.jpg" alt="Zivon App Icon">
@@ -590,11 +588,12 @@
         </div>
     </footer>
 
+    <!-- 👑 [யுனிவர்சல் ஆல்-பிரவுசர் பக் ஃப்ரீ ஜாவாஸ்கிரிப்ட்] -->
     <script>
         window.onload = function() {
             var urlParams = new URLSearchParams(window.location.search);
             var idParam = urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
-            var isLoopChecked = urlParams.get('fallback') === 'true'; // பிரவுசர் லூப்பை நிப்பாட்டும் சுவிட்ச்!
+            var isFallback = urlParams.get('fallback') === 'true'; // லூப் செக் பாயிண்ட்
 
             if (idParam !== "") {
                 var cleanPath = decodeURIComponent(idParam);
@@ -602,76 +601,51 @@
                     cleanPath = "/" + cleanPath;
                 }
                 
-                // 👑 [பக்கா ஃபால்பேக் லாக் மாமே]: 
-                // ஆப் இல்லாத புது யூசருக்கு இந்த ஃபால்பேக் URL லோட் ஆகும். கடைசியில் fallback=true இருக்குறதால் லூப் தானாக நின்றுவிடும்!
                 var currentCleanUrl = window.location.origin + window.location.pathname + "?path=" + encodeURIComponent(idParam);
                 var fallbackUrl = currentCleanUrl + "&fallback=true";
 
                 var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
                                 "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
                                 encodeURIComponent(fallbackUrl) + ";end";
-                
-                var isChrome = /Chrome/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent);
-                var isAppUser = localStorage.getItem("zivon_app_user") === "true";
-                
-                // 1. ஆப் வச்சிருக்கற யூசருக்கு - அசுர வேகத்துல டக்குனு ஆப்புக்கு கொண்டு போறோம்
-                if (isAppUser) {
+
+                // 👑 [சாம்சங், ஓபரா, கிவி, டக்-டக்-கோ ஸ்பெஷல் டைம்-அவுட் வித்தை]:
+                // ஒருவேளை ஹெட்-டேக் ஜாவாஸ்கிரிப்ட் ஆப்பைத் தூண்டலைனா, பேஜ் லோட் ஆனதும் மீண்டும் ஒருமுறை 0 செகண்ட்ல ஃபயர் பண்றோம்!
+                if (!isFallback) {
                     window.location.href = intentUrl;
-                } 
-                // 2. ஆப் இல்லாத புது யூசர் - ஃபால்பேக் ஆகி ஆல்ரெடி இங்கேயே நின்னுகிட்டு இருந்தா, அவனுக்கு லூப் பண்ணாம அப்படியே லேண்டிங் பேஜ்ஜை காட்டுறோம்
-                else if (isChrome && !isLoopChecked) {
-                    var hasApp = false;
                     
-                    // பேக்ரவுண்ட்ல ஆப்பை தூண்ட ட்ரை பண்றோம் மாமே!
-                    var iframe = document.createElement("iframe");
-                    iframe.style.display = "none";
-                    iframe.src = intentUrl;
-                    document.body.appendChild(iframe);
-
-                    window.onblur = function() {
-                        hasApp = true;
-                        localStorage.setItem("zivon_app_user", "true");
-                    };
-
-                    // ஆப் இருக்கறவனுக்கு 300ms-ல் கார்டு பாப்-அப் ஆகும் வித்தை!
+                    // 👑 [ஆப் இல்லாத புது யூசருக்கான சேஃப்டி லாக்]:
+                    // ஆப் இல்லாததால் 1.5 செகண்டிற்கு மேல் பிரவுசர் இதே பக்கத்தில் நின்றால், பாப்-அப் கார்டை காட்டி லூப்பை பிரேக் பண்றோம் மச்சி!
                     setTimeout(function() {
-                        if (hasApp || document.hidden || screenTop < 0) {
-                            var overlay = document.getElementById("zivonAppOverlay");
-                            if (overlay) {
-                                overlay.style.display = "flex"; 
-                            }
+                        var overlay = document.getElementById("zivonAppOverlay");
+                        if (overlay) {
+                            overlay.style.display = "flex";
                         }
-                    }, 300);
-                    
-                    var bannerBtn = document.getElementById("btnBannerOpen");
-                    if (bannerBtn) {
-                        bannerBtn.onclick = function() {
-                            localStorage.setItem("zivon_app_user", "true");
-                            window.location.href = intentUrl;
-                        };
+                    }, 1500);
+                } else {
+                    // ஆப் இல்லாத யூசர் ரீடைரக்ட் ஆகி லேண்டிங் பேஜுக்கு வந்துட்டா, லூப் ஆகாம இங்கேயே நிப்பான்!
+                    var overlay = document.getElementById("zivonAppOverlay");
+                    if (overlay) {
+                        overlay.style.display = "flex"; // அவனுக்கும் மேனுவல் ஓபன் பட்டன் காட்டுறோம்
                     }
-                } 
-                // ஒருவேளை ஆப் இல்லாம ஃபால்பேக் ஆகி வந்திருந்தா, பாப்-அப் காட்டாம ஸ்ட்ரெயிட்டா லேண்டிங் பேஜ்ல நிறுத்துறோம்!
-                else if (isLoopChecked) {
-                    // ஆப் இல்லாத புது யூசர் இங்கேயே ஸ்டாப் ஆயிட்டான் மாமே! நோ லூப்பிங் எர்ரர்.
-                    console.log("App not installed. Stopped loop safely on landing page.");
+                }
+
+                // பாப் அப் கார்டுல இருக்குற ஓபன் பட்டன் ஆக்சன்
+                var bannerBtn = document.getElementById("btnBannerOpen");
+                if (bannerBtn) {
+                    bannerBtn.onclick = function() {
+                        window.location.href = intentUrl;
+                    };
                 }
             }
 
-            // டவுன்லோட் பட்டன் லிங்க் செட்டப் (உங்க அசல் கோடு மாறாமல் அப்படியே)
+            // டவுன்லோட் பட்டன் லிங்க்குகள் (மாமே, உங்க ஒரிஜினல் லாஜிக் அப்படியே இருக்கு!)
             var apkBtn = document.getElementById("btnApk");
             if (apkBtn) {
                 apkBtn.href = "https://zivonnovels.blogspot.com/p/zivon-novel-app-home.html" + (idParam ? "?id=" + encodeURIComponent(idParam) : "");
-                apkBtn.onclick = function() {
-                    localStorage.setItem("zivon_app_user", "true");
-                };
             }
             var playBtn = document.getElementById("btnPlay");
             if (playBtn) {
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
-                playBtn.onclick = function() {
-                    localStorage.setItem("zivon_app_user", "true");
-                };
             }
         };
     </script>
