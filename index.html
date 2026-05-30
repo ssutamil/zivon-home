@@ -127,7 +127,7 @@
             z-index: 1000;
         }
 
-        /* 👑 [ஸ்டெப் 2 ஃபிக்ஸ்: லோகோ பழையபடி லெப்ட் சைடுக்கும், பட்டன் ரைட் சைடுக்கும் மாற்றப்பட்டது] */
+        /* 👑 [泛டெப் 2 ஃபிக்ஸ்: லோகோ பழையபடி லெப்ட் சைடுக்கும், பட்டன் ரைட் சைடுக்கும் மாற்றப்பட்டது] */
         .nav-wrapper {
             display: flex;
             justify-content: space-between;
@@ -305,6 +305,15 @@
             color: var(--text-muted);
         }
 
+        /* 👑 [வெர்ஷன் லாக் டெக்ஸ்ட் ஸ்டைல்]: யூசர்களுக்கு புதிய வெர்ஷன் காட்டுவதற்கான பிரத்யேக சிஎஸ்எஸ் மாமே! */
+        .version-badge-note {
+            font-size: 13px;
+            color: #03806a;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
         @keyframes floatAnim {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -471,6 +480,9 @@
                 <a href="#" class="btn btn-primary" id="btnApk">📥 Direct APK Download</a>
                 <a href="#" class="btn btn-secondary" id="btnPlay">🤖 Google Play Store</a>
             </div>
+            
+            <!-- 👑 [வெர்ஷன் லாக் டிஸ்ப்ளே மாமே]: உன்னோட புதிய வெர்ஷன் விபரங்களை இங்க அழகா காட்ட வச்சிருக்கேன்! -->
+            <span class="version-badge-note">Latest Version: 9.0.1 (Build 9)</span>
         </div>
         <div class="hero-image">
             <div class="phone-mockup">
@@ -516,6 +528,7 @@
 
     <footer>
         <div class="container">
+            <!-- 👑 [அசல் பிராண்ட் பெயர் பாதுகாப்பு லாக்]: Suda Suda Updates அக்மார்க் காப்பிரைட் மாமே! -->
             <p>&copy; 2026 SUDA SUDA UPDATES. All Rights Reserved. Designed for Zivon Novels & Info.</p>
         </div>
     </footer>
@@ -543,8 +556,9 @@
             var currentCleanUrl = window.location.origin + window.location.pathname + "?path=" + encodeURIComponent(idParam);
             var fallbackUrl = currentCleanUrl + "&fallback=true";
 
+            // 👑 [INTENT VERSION LOCK வித்தை]: இன்டென்ட் பாஸ் பண்ணும்போதே நம்ம புதிய versionCode 9-ஐயும் சேர்த்து லாக் பண்றோம் மாமே!
             var intentUrl = "intent://zivonnovels.blogspot.com" + cleanPath +
-                            "#Intent;scheme=https;package=com.ssu.zivon;S.browser_fallback_url=" + 
+                            "#Intent;scheme=https;package=com.ssu.zivon;i.versionCode=9;S.browser_fallback_url=" + 
                             encodeURIComponent(fallbackUrl) + ";end";
 
             if (idParam !== "") {
