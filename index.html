@@ -11,7 +11,6 @@
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
-            // வாட்ஸ்அப் அல்லது வெப்சைட்டிலிருந்து வரும் டோக்கனைப் பிரிக்கிறது
             var secureToken = urlParams.get('secure_token') || urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
             var isFallback = urlParams.get('fallback') === 'true'; 
 
@@ -19,7 +18,6 @@
                 var currentCleanUrl = window.location.origin + window.location.pathname + "?secure_token=" + encodeURIComponent(secureToken);
                 var fallbackUrl = currentCleanUrl + "&fallback=true";
 
-                // 🔥 [புதிய டீப் லிங்க் இஞ்சின் கனெக்ஷன்]: ஆப்பில் உள்ள கஸ்டம் ஸ்கீமுடன் நேரடியாக இணைகிறது
                 var intentUrl = "intent://read?secure_token=" + encodeURIComponent(secureToken) +
                                 "#Intent;scheme=zivon;package=com.ssu.zivon;S.browser_fallback_url=" + 
                                 encodeURIComponent(fallbackUrl) + ";end";
@@ -30,7 +28,6 @@
     </script>
 
     <style>
-        /* 👑 பிரீமியம் மாடர்ன் டார்க் தீம் செட்டப் */
         :root {
             --bg-color: #101419;
             --card-bg: #161B21;
@@ -39,6 +36,9 @@
             --text-main: #ffffff;
             --text-muted: #a0aec0;
             --btn-gradient: linear-gradient(135deg, #007bff 0%, #03806a 100%);
+            /* Playstore பட்டனுக்கான நியான் ப்ளூ க்ளோ நிறம் */
+            --play-pulse-glow: rgba(0, 123, 255, 0.4);
+            --play-pulse-glow-deep: rgba(0, 198, 255, 0.6);
         }
 
         * {
@@ -56,7 +56,6 @@
             width: 100%;
         }
 
-        /* [ZIVON இன்ஸ்டன்ட் பாப்-அப் - முற்றிலும் முடக்கப்பட்டுள்ளது] */
         .app-popup-overlay {
             display: none; 
             position: fixed;
@@ -72,7 +71,6 @@
             padding: 20px;
         }
 
-        /* 👑 ஹெடர் பட்டன் - டாப் ரைட் சைடுக்கு கொண்டு வரப்பட்டது */
         .btn-header-open {
             background: var(--btn-gradient);
             color: #fff;
@@ -93,7 +91,7 @@
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
         }
 
-        /* டவுன்லோட் பட்டனுக்கான ஹார்ட் பீட் அனிமேஷன் */
+        /* APK டவுன்லோட் பட்டனுக்கான அனிமேஷன் (பச்சை நிற க்ளோ) */
         .pulse-animation {
             animation: heartBeat 1.2s infinite !important;
         }
@@ -104,6 +102,20 @@
             28% { transform: scale(1); box-shadow: 0 4px 20px rgba(3, 128, 106, 0.3); }
             42% { transform: scale(1.04); box-shadow: 0 6px 25px rgba(0, 123, 255, 0.5); }
             70% { transform: scale(1); box-shadow: 0 4px 20px rgba(3, 128, 106, 0.3); }
+        }
+
+        /* 🔥 [புதிய அனிமேஷன்]: Play Store பட்டனுக்கான அனிமேஷன் (நீல நிற க்ளோ) */
+        .play-pulse-animation {
+            animation: playHeartBeat 1.2s infinite !important;
+            border-color: #007bff !important; /* அனிமேஷன் ஆகும் போது பார்டர் கலர் மாறும் */
+        }
+
+        @keyframes playHeartBeat {
+            0% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2); }
+            14% { transform: scale(1.04); box-shadow: 0 6px 25px var(--play-pulse-glow-deep); }
+            28% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2); }
+            42% { transform: scale(1.04); box-shadow: 0 6px 25px var(--play-pulse-glow-deep); }
+            70% { transform: scale(1); box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2); }
         }
 
         .container {
@@ -539,20 +551,25 @@
             var currentCleanUrl = window.location.origin + window.location.pathname + "?secure_token=" + encodeURIComponent(secureToken);
             var fallbackUrl = currentCleanUrl + "&fallback=true";
 
-            // 👑 [INTENT ENGINE]: புதிய கஸ்டம் யூஆர்எல் ஸ்கீமை சிஸ்டத்துடன் இணைக்கிறது
             var intentUrl = "intent://read?secure_token=" + encodeURIComponent(secureToken) +
                             "#Intent;scheme=zivon;package=com.ssu.zivon;S.browser_fallback_url=" + 
                             encodeURIComponent(fallbackUrl) + ";end";
+
+            // ஆனிமேஷன்களைச் சேர்க்கும் பொதுவான செயல்பாடு (Function)
+            function activateAnimations() {
+                if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
+                if (playBtn) { playBtn.classList.add("play-pulse-animation"); } // 🔥 புதிய ப்ளேஸ்டோர் அனிமேஷன் சேர்க்கப்படுகிறது
+            }
 
             if (secureToken !== "") {
                 if (!isFallback) {
                     window.location.href = intentUrl;
                     
                     setTimeout(function() {
-                        if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
+                        activateAnimations();
                     }, 1500);
                 } else {
-                    if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
+                    activateAnimations();
                 }
             }
 
@@ -569,14 +586,14 @@
                         if (downloadSection) {
                             downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
-                        if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
+                        activateAnimations();
                     }, 3000);
                 } else {
                     var downloadSection = document.getElementById("downloadArea");
                     if (downloadSection) {
                         downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
-                    if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
+                    activateAnimations();
                 }
             }
 
