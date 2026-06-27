@@ -14,15 +14,10 @@
             var secureToken = urlParams.get('secure_token') || urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
             var isFallback = urlParams.get('fallback') === 'true'; 
 
+            // 🎯 [மரண மாஸ் பிரவுசர் கட் பிக்ஸ்]: intent:// தூக்கி எறியப்பட்டு நேரடி அப்ளிகேஷன் ஸ்கீம் (zivon://) மாற்றப்பட்டுள்ளது!
             if (secureToken !== "" && !isFallback) {
-                var currentCleanUrl = window.location.origin + window.location.pathname + "?secure_token=" + encodeURIComponent(secureToken);
-                var fallbackUrl = currentCleanUrl + "&fallback=true";
-
-                var intentUrl = "intent://read?secure_token=" + encodeURIComponent(secureToken) +
-                                "#Intent;scheme=zivon;package=com.ssu.zivon;S.browser_fallback_url=" + 
-                                encodeURIComponent(fallbackUrl) + ";end";
-                
-                window.location.replace(intentUrl);
+                var directAppUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
+                window.location.replace(directAppUrl);
             }
         })();
     </script>
@@ -36,7 +31,6 @@
             --text-main: #ffffff;
             --text-muted: #a0aec0;
             --btn-gradient: linear-gradient(135deg, #007bff 0%, #03806a 100%);
-            /* Playstore பட்டனுக்கான நியான் ப்ளூ க்ளோ நிறம் */
             --play-pulse-glow: rgba(0, 123, 255, 0.4);
             --play-pulse-glow-deep: rgba(0, 198, 255, 0.6);
         }
@@ -91,7 +85,6 @@
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
         }
 
-        /* APK டவுன்லோட் பட்டனுக்கான அனிமேஷன் (பச்சை நிற க்ளோ) */
         .pulse-animation {
             animation: heartBeat 1.2s infinite !important;
         }
@@ -104,10 +97,9 @@
             70% { transform: scale(1); box-shadow: 0 4px 20px rgba(3, 128, 106, 0.3); }
         }
 
-        /* 🔥 [புதிய அனிமேஷன்]: Play Store பட்டனுக்கான அனிமேஷன் (நீல நிற க்ளோ) */
         .play-pulse-animation {
             animation: playHeartBeat 1.2s infinite !important;
-            border-color: #007bff !important; /* அனிமேஷன் ஆகும் போது பார்டர் கலர் மாறும் */
+            border-color: #007bff !important;
         }
 
         @keyframes playHeartBeat {
@@ -548,22 +540,18 @@
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
             }
 
-            var currentCleanUrl = window.location.origin + window.location.pathname + "?secure_token=" + encodeURIComponent(secureToken);
-            var fallbackUrl = currentCleanUrl + "&fallback=true";
+            // 🎯 [நேரடி அப்ளிகேஷன் லாக்]: intent லிங்க்கிற்குப் பதிலாக அசல் ஆப் ஸ்கீம் டைரக்டாக லோடு செய்யப்படுகிறது
+            var appDirectUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
 
-            var intentUrl = "intent://read?secure_token=" + encodeURIComponent(secureToken) +
-                            "#Intent;scheme=zivon;package=com.ssu.zivon;S.browser_fallback_url=" + 
-                            encodeURIComponent(fallbackUrl) + ";end";
-
-            // ஆனிமேஷன்களைச் சேர்க்கும் பொதுவான செயல்பாடு (Function)
             function activateAnimations() {
                 if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
-                if (playBtn) { playBtn.classList.add("play-pulse-animation"); } // 🔥 புதிய ப்ளேஸ்டோர் அனிமேஷன் சேர்க்கப்படுகிறது
+                if (playBtn) { playBtn.classList.add("play-pulse-animation"); }
             }
 
             if (secureToken !== "") {
                 if (!isFallback) {
-                    window.location.href = intentUrl;
+                    // பிரவுசருக்குள் செல்லாமல் ஸ்ட்ரெயிட்டா ஆப்பைத் திறக்கச் சொல்லும் மேஜிக் கட்டளை
+                    window.location.href = appDirectUrl;
                     
                     setTimeout(function() {
                         activateAnimations();
@@ -579,7 +567,7 @@
                 var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                 
                 if (isMobile && secureToken !== "") {
-                    window.location.href = intentUrl;
+                    window.location.href = appDirectUrl;
                     
                     setTimeout(function() {
                         var downloadSection = document.getElementById("downloadArea");
