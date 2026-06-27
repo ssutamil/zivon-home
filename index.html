@@ -14,24 +14,7 @@
             var secureToken = urlParams.get('secure_token') || urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
             var isFallback = urlParams.get('fallback') === 'true'; 
 
-            // 🎯 [டெலிகிராம் லாகின் டீப் லிங்க் மாஸ் ட்ரிக்]:
-            // ஒருவேளை டெலிகிராம் லாகின் வழியாக டேட்டா வந்தால், அதை அப்படியே ஆண்ட்ராய்டு WebView-க்கு திருப்பி அனுப்புகிறோம்!
-            if (urlParams.has('id') && urlParams.has('first_name') && !urlParams.has('secure_token')) {
-                var tgId = urlParams.get('id');
-                var firstName = urlParams.get('first_name');
-                var username = urlParams.get('username') || '';
-                var photoUrl = urlParams.get('photo_url') || '';
-                
-                var telegramAppUrl = "zivon://read?tgAuthResult=true&id=" + tgId + 
-                                     "&first_name=" + encodeURIComponent(firstName) + 
-                                     "&username=" + encodeURIComponent(username) + 
-                                     "&photo_url=" + encodeURIComponent(photoUrl);
-                                     
-                window.location.replace(telegramAppUrl);
-                return; // மேலே உள்ள கண்டிஷன் ஒர்க் ஆனா இதோட நிறுத்திக்கணும்
-            }
-
-            // 🎯 [மரண மாஸ் பிரவுசர் கட் பிக்ஸ்]: அசல் நாவல்/தகவல் லிங்க்குகளுக்கான நேரடி அப்ளிகேஷன் ஸ்கீம் லாக்!
+            // 🎯 [மரண மாஸ் பிரவுசர் கட் பிக்ஸ்]: intent:// தூக்கி எறியப்பட்டு நேரடி அப்ளிகேஷன் ஸ்கீம் (zivon://) மாற்றப்பட்டுள்ளது!
             if (secureToken !== "" && !isFallback) {
                 var directAppUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
                 window.location.replace(directAppUrl);
@@ -540,7 +523,7 @@
         <div class="container">
             <p>&copy; 2026 SUDA SUDA UPDATES. All Rights Reserved. Designed for Zivon Novels & Info.</p>
         </div>
-    </section>
+    </footer>
 
     <script>
         window.onload = function() {
@@ -557,25 +540,17 @@
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
             }
 
-            // 🎯 [நேரடி அப்ளிகேஷன் லாக்]: அசல் ஆப் ஸ்கீம் யூஆர்எல்
+            // 🎯 [நேரடி அப்ளிகேஷன் லாக்]: intent லிங்க்கிற்குப் பதிலாக அசல் ஆப் ஸ்கீம் டைரக்டாக லோடு செய்யப்படுகிறது
             var appDirectUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
-
-            // ஒருவேளை டெலிகிராம் லாகின் டேட்டா வந்திருந்தால், அதற்கான அப்ளிகேஷன் யூஆர்எல்-ஐ மாற்றுகிறோம்
-            if (urlParams.has('id') && urlParams.has('first_name') && !urlParams.has('secure_token')) {
-                appDirectUrl = "zivon://read?tgAuthResult=true&id=" + urlParams.get('id') + 
-                               "&first_name=" + encodeURIComponent(urlParams.get('first_name')) + 
-                               "&username=" + encodeURIComponent(urlParams.get('username') || '') + 
-                               "&photo_url=" + encodeURIComponent(urlParams.get('photo_url') || '');
-            }
 
             function activateAnimations() {
                 if (apkBtn) { apkBtn.classList.add("pulse-animation"); }
                 if (playBtn) { playBtn.classList.add("play-pulse-animation"); }
             }
 
-            // டோக்கன் அல்லது டெலிகிராம் ஐடி ஏதேனும் ஒன்று இருந்தால் ஆப்பைத் திறக்க முயற்சி செய்கிறோம்
-            if (secureToken !== "" || (urlParams.has('id') && urlParams.has('first_name'))) {
+            if (secureToken !== "") {
                 if (!isFallback) {
+                    // பிரவுசருக்குள் செல்லாமல் ஸ்ட்ரெயிட்டா ஆப்பைத் திறக்கச் சொல்லும் மேஜிக் கட்டளை
                     window.location.href = appDirectUrl;
                     
                     setTimeout(function() {
@@ -591,7 +566,7 @@
                 
                 var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                 
-                if (isMobile && (secureToken !== "" || (urlParams.has('id') && urlParams.has('first_name')))) {
+                if (isMobile && secureToken !== "") {
                     window.location.href = appDirectUrl;
                     
                     setTimeout(function() {
