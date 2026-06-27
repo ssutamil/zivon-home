@@ -3,6 +3,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "com.ssu.zivon",
-    "sha256_cert_fingerprints": ["BE:6C:8D:1C:9F:7C:AA:30:D6:59:28:93:6C:35:0A:5C:32:9C:B1:B0:9C:F2:81:AF:34:53:0E:53:EA:5A:BC:2B"]
+    "sha256_cert_fingerprints": ["E6:35:A1:89:D0:11:FF:35:9D:90:0D:49:84:5E:10:96:20:5F:C5:51:6F:B9:8F:05:D1:22:EA:3E:71:4D:75:7B"]
   }
 }]
