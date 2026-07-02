@@ -14,19 +14,19 @@
             var secureToken = urlParams.get('secure_token') || urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
             var isFallback = urlParams.get('fallback') === 'true'; 
 
-            // 🎯 [APP CHECK FIX]: App iruntha mattum open aagum, illana 1.5sec-il home page thonrum!
+            // ஆப் இருந்தால் நேரடியாக ஆப்பிற்குள் அழைத்துச் செல்ல பிரத்யேக லிங்க்
             if (secureToken !== "" && !isFallback) {
                 var directAppUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
                 
-                // App-ai open panna try pannuthu
-                window.location.href = directAppUrl;
+                // ஆப்பைத் திறக்க முயற்சி செய்கிறது
+                window.location.replace(directAppUrl);
 
-                // 🌐 App illatha brayusargalukku automatic-aga intha home page-aiye thurakum (Fallback script)
+                /* ஒருவேளை 2 வினாடிகளுக்குள் ஆப் திறக்கப்படவில்லை எனில், பயனர் ஆப் வைத்திருக்கவில்லை 
+                  என்று அர்த்தம். அப்போது தானாகவே இந்த லேண்டிங் பேஜ் பக்கத்திலேயே இருக்கும்படி செய்கிறது.
+                */
                 setTimeout(function() {
-                    var currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('fallback', 'true');
-                    window.location.replace(currentUrl.toString());
-                }, 1500);
+                    console.log("ஆப் நிறுவப்படவில்லை. லேண்டிங் பக்கம் காண்பிக்கப்படுகிறது.");
+                }, 2000);
             }
         })();
     </script>
@@ -57,21 +57,6 @@
             color: var(--text-main);
             overflow-x: hidden;
             width: 100%;
-        }
-
-        .app-popup-overlay {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(16, 20, 25, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
 
         .btn-header-open {
@@ -556,11 +541,12 @@
                 if (playBtn) { playBtn.classList.add("play-pulse-animation"); }
             }
 
+            // பக்கம் லோட் ஆகும் போது ஆப் இருந்தால் திறக்க முயலும், இல்லை என்றால் அனிமேஷனை மட்டும் ஆன் செய்யும்
             if (secureToken !== "") {
                 if (!isFallback) {
-                    // Script moolam app-ai tholaika try seiyum
                     window.location.href = appDirectUrl;
                     
+                    // ஆப் இல்லாத பட்சத்தில் பக்கத்தில் உள்ள பட்டன்களுக்கு 1.5 வினாடியில் அனிமேஷன் கொடுக்கிறது
                     setTimeout(function() {
                         activateAnimations();
                     }, 1500);
@@ -569,6 +555,7 @@
                 }
             }
 
+            // மேல் பட்டனை கிளிக் செய்யும் போது இயங்கும் செயல்பாடு
             function handleAppOpenAttempt(e) {
                 if(e) e.preventDefault(); 
                 
@@ -577,13 +564,14 @@
                 if (isMobile && secureToken !== "") {
                     window.location.href = appDirectUrl;
                     
+                    // ஆப் ஓபன் ஆகவில்லை எனில் டவுன்லோட் பகுதிக்கு ஸ்க்ரோல் செய்யும்
                     setTimeout(function() {
                         var downloadSection = document.getElementById("downloadArea");
                         if (downloadSection) {
                             downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                         activateAnimations();
-                    }, 3000);
+                    }, 2000);
                 } else {
                     var downloadSection = document.getElementById("downloadArea");
                     if (downloadSection) {
