@@ -14,10 +14,19 @@
             var secureToken = urlParams.get('secure_token') || urlParams.get('id') || urlParams.get('path') || urlParams.get('post') || "";
             var isFallback = urlParams.get('fallback') === 'true'; 
 
-            // 🎯 [மரண மாஸ் பிரவுசர் கட் பிக்ஸ்]: intent:// தூக்கி எறியப்பட்டு நேரடி அப்ளிகேஷன் ஸ்கீம் (zivon://) மாற்றப்பட்டுள்ளது!
+            // 🎯 [APP CHECK FIX]: App iruntha mattum open aagum, illana 1.5sec-il home page thonrum!
             if (secureToken !== "" && !isFallback) {
                 var directAppUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
-                window.location.replace(directAppUrl);
+                
+                // App-ai open panna try pannuthu
+                window.location.href = directAppUrl;
+
+                // 🌐 App illatha brayusargalukku automatic-aga intha home page-aiye thurakum (Fallback script)
+                setTimeout(function() {
+                    var currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set('fallback', 'true');
+                    window.location.replace(currentUrl.toString());
+                }, 1500);
             }
         })();
     </script>
@@ -540,7 +549,6 @@
                 playBtn.href = "https://play.google.com/store/apps/details?id=com.ssu.zivon";
             }
 
-            // 🎯 [நேரடி அப்ளிகேஷன் லாக்]: intent லிங்க்கிற்குப் பதிலாக அசல் ஆப் ஸ்கீம் டைரக்டாக லோடு செய்யப்படுகிறது
             var appDirectUrl = "zivon://read?secure_token=" + encodeURIComponent(secureToken);
 
             function activateAnimations() {
@@ -550,7 +558,7 @@
 
             if (secureToken !== "") {
                 if (!isFallback) {
-                    // பிரவுசருக்குள் செல்லாமல் ஸ்ட்ரெயிட்டா ஆப்பைத் திறக்கச் சொல்லும் மேஜிக் கட்டளை
+                    // Script moolam app-ai tholaika try seiyum
                     window.location.href = appDirectUrl;
                     
                     setTimeout(function() {
